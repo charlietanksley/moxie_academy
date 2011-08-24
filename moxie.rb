@@ -123,7 +123,16 @@ class MoxieApp < Sinatra::Base
   end
 
   post '/login' do
-    redirect to('/lessons')
+    credentials = params[:login]
+    user = MoxieApp::User.first(:email => credentials[:email],
+                                :password => credentials[:password])
+    if user
+      session[:logged_in_as] = user.email
+      session[:logged_in] = true
+      redirect to('/')
+    else
+      redirect to('/login')
+    end
   end
 
   # END LOGIN }}}
