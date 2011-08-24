@@ -29,13 +29,11 @@ class MoxieApp < Sinatra::Base
   class Lesson
     include DataMapper::Resource
 
-    property :id,         Serial
-    property :title,      String
-    property :slug,       String, :key => true
-    property :body,       Text
-    property :mp4,        String
-    property :webm,       String
-    property :ogv,        String
+    property :id,           Serial
+    property :title,        String
+    property :slug,         String, :key => true
+    property :body,         Text
+    property :video_title,  String
   end
   
   DataMapper.auto_upgrade!
@@ -61,10 +59,6 @@ class MoxieApp < Sinatra::Base
       unless session[:logged_in_as] == 'admin'
         redirect '/login'
       end
-    end
-
-    def true?
-      'true'
     end
 
     # CRIBBED FROM THEPHILOSOPHER.ME {{{
@@ -148,6 +142,7 @@ class MoxieApp < Sinatra::Base
   # ADMIN TASKS {{{
 
   get '/admin' do
+    authenticate_admin
     slim :"admin/index"
   end
 
@@ -157,11 +152,19 @@ class MoxieApp < Sinatra::Base
   end
 
   get '/admin/new-lesson' do
+    #authenticate_admin
     slim :'lessons/new'
   end
 
   post '/admin/new-lesson' do
-    # Take action
+    #authenticate_admin
+    lesson = MoxieApp::Lesson.new(params[:lesson])
+    if lesson.save!
+      @lesson = lesson
+      redirect ("/lessons/#{@lesson.slug}")
+    else
+      "Sorry, something went wrong!"
+    end
   end
 
   get '/admin/users' do
@@ -200,7 +203,7 @@ class MoxieApp < Sinatra::Base
 
   get '/development/login-admin' do
     session[:logged_in_as] = 'admin'
-    redirect to ('/admin/users')
+    redirect to ('/admin')
     #redirect to ('/development/wtf')
   end
 

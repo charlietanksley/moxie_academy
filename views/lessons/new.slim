@@ -1,0 +1,13 @@
+h1 Create a lesson
+
+form action='/admin/new-lesson' method='POST'
+  p Title:
+  input type='text' name='lesson[title]' label='Title'
+  p Slug:
+  input type='text' name='lesson[slug]' label='Slug'
+  p Name of Video:
+  input type='text' name='lesson[video_title]' label='Name of Video'
+  p Text:
+  textarea name='lesson[body]' label='Lesson Body'
+  br
+  input type='submit' value='Create'
