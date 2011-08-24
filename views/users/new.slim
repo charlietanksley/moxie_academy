@@ -1,0 +1,13 @@
+h1 Sign up today!
+
+form action='/signup' method='POST'
+  p Email:
+  input type='text' name='user[email]' label='Email'
+  p Password
+  input type='text' name='user[password]' label='Password'
+  p First Name:
+  input type='text' name='user[first_name]' label='First Name'
+  p Last Name:
+  input type='text' name='user[last_name]' label='Last Name'
+  br
+  input type='submit' value='Sign Up!'

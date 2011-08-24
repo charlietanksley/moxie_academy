@@ -2,6 +2,7 @@ require 'rubygems'
 require 'sinatra/base'
 require 'data_mapper'
 require 'dm-validations'
+require 'bcrypt'
 require 'slim'
 
 class MoxieApp < Sinatra::Base
@@ -12,18 +13,21 @@ class MoxieApp < Sinatra::Base
 
   class User
     include DataMapper::Resource
+    include BCrypt
 
     property :id,         Serial
     property :email,      String
     property :password,   String
+    property :salt,       String
     property :first_name, String
     property :last_name,  String
     property :start_date, DateTime
     property :end_date,   DateTime
     property :paid,       Boolean, :default => false
 
-    validates_presence_of :email
-    validates_presence_of :password
+    validates_presence_of   :email
+    validates_presence_of   :password
+    validates_uniqueness_of :email
   end
 
   class Lesson
@@ -66,6 +70,10 @@ class MoxieApp < Sinatra::Base
       unless session[:logged_in] == true
         redirect '/login'
       end
+    end
+
+    def encrypt_password(user, password)
+      BCrypt::Engine.hash_secret(password, user.salt)
     end
 
     # CRIBBED FROM THEPHILOSOPHER.ME {{{
@@ -124,9 +132,9 @@ class MoxieApp < Sinatra::Base
 
   post '/login' do
     credentials = params[:login]
-    user = MoxieApp::User.first(:email => credentials[:email],
-                                :password => credentials[:password])
-    if user
+    user = MoxieApp::User.first(:email => credentials[:email])
+          
+    if user.password == encrypt_password(user, credentials[:password])
       session[:logged_in_as] = user.email
       session[:logged_in] = true
       redirect to('/')
@@ -151,13 +159,31 @@ class MoxieApp < Sinatra::Base
   end
 
   # END LESSONS }}}
-  # PAYMENT {{{
+  # USERS {{{
+
+  get '/signup' do
+    slim :'users/new'
+  end
+
+  post '/signup' do
+    @user = User.new(params[:user])
+    @user.salt = BCrypt::Engine.generate_salt
+    @user.password = encrypt_password(@user, @user.password)
+
+    if @user.save!
+      session[:logged_in_as] = @user.email
+      session[:logged_in] = true
+      redirect to('/lessons')
+    else
+      redirect to('/signup')
+    end
+  end
 
   get '/users/payment' do
     slim :'users/payment'
   end
 
-  # END PAYMENT }}}
+  # END USERS }}}
   # ADMIN TASKS {{{
 
   get '/admin' do

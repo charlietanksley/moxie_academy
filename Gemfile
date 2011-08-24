@@ -5,6 +5,7 @@ gem 'sinatra'
 # DB
 gem 'data_mapper'
 gem 'dm-postgres-adapter'
+gem 'bcrypt-ruby', :require => 'bcrypt'
 
 # VIEWS
 gem 'slim'
