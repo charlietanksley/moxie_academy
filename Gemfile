@@ -16,4 +16,7 @@ gem 'thin'
 group :development do
   gem 'dm-sqlite-adapter'
   gem 'tux'
+  gem 'compass'
+  gem 'sass'
+  gem 'foreman'
 end
