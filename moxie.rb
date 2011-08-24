@@ -62,6 +62,12 @@ class MoxieApp < Sinatra::Base
       end
     end
 
+    def authenticate_logged_in
+      unless session[:logged_in] == true
+        redirect '/login'
+      end
+    end
+
     # CRIBBED FROM THEPHILOSOPHER.ME {{{
     #def authenticate_admin
     #  unless session['logged_in_as'] == 'charlietanksley'
@@ -124,11 +130,13 @@ class MoxieApp < Sinatra::Base
   # LESSONS {{{
 
   get '/lessons' do
+    authenticate_logged_in
     @lessons = MoxieApp::Lesson.all
     slim :'lessons/index'
   end
 
   get '/lessons/:page' do
+    authenticate_logged_in
     @lesson = params[:page]
     slim :'lessons/show'
   end
@@ -205,8 +213,20 @@ class MoxieApp < Sinatra::Base
 
   get '/development/login-admin' do
     session[:logged_in_as] = 'admin'
+    session[:logged_in] = true
     redirect to ('/admin')
-    #redirect to ('/development/wtf')
+  end
+
+  get '/development/login-user' do
+    session[:logged_in_as] = 'tmp@email.com'
+    session[:logged_in] = true
+    redirect to ('/lessons')
+  end
+
+  get '/development/login-user2' do
+    session[:logged_in_as] = 't@secondemail.com'
+    session[:logged_in] = true
+    redirect to ('/lessons')
   end
 
   get '/development/logout' do
