@@ -34,6 +34,7 @@ class MoxieApp < Sinatra::Base
     property :slug,         String, :key => true
     property :body,         Text
     property :video_title,  String
+    property :poster_name,  String
   end
   
   DataMapper.auto_upgrade!
@@ -123,6 +124,7 @@ class MoxieApp < Sinatra::Base
   # LESSONS {{{
 
   get '/lessons' do
+    @lessons = MoxieApp::Lesson.all
     slim :'lessons/index'
   end
 
@@ -152,12 +154,12 @@ class MoxieApp < Sinatra::Base
   end
 
   get '/admin/new-lesson' do
-    #authenticate_admin
+    authenticate_admin
     slim :'lessons/new'
   end
 
   post '/admin/new-lesson' do
-    #authenticate_admin
+    authenticate_admin
     lesson = MoxieApp::Lesson.new(params[:lesson])
     if lesson.save!
       @lesson = lesson

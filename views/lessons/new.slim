@@ -5,8 +5,10 @@ form action='/admin/new-lesson' method='POST'
   input type='text' name='lesson[title]' label='Title'
   p Slug:
   input type='text' name='lesson[slug]' label='Slug'
-  p Name of Video:
+  p Name of Video (do not include file type):
   input type='text' name='lesson[video_title]' label='Name of Video'
+  p Name of Poster (include file type):
+  input type='text' name='lesson[poster_name]' label='Name of Poster'
   p Text:
   textarea name='lesson[body]' label='Lesson Body'
   br
