@@ -154,7 +154,7 @@ class MoxieApp < Sinatra::Base
 
   get '/lessons/:page' do
     authenticate_logged_in
-    @lesson = params[:page]
+    @lesson = Lesson.first(params[:page])
     slim :'lessons/show'
   end
 

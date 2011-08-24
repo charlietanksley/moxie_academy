@@ -1,6 +1,7 @@
 - @lessons.each do |l|
   .lesson
-    h2 = l.title
+    h2
+      a href="/lessons/#{l.slug}" = l.title
     p = l.body
     .video-js-box
       //Using the Video for Everybody Embed Code http://camendesign.com/code/video_for_everybody
