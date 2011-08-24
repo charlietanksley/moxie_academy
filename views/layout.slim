@@ -2,11 +2,16 @@ doctype html
 html lang="en"
   head
     meta charset="UTF-8"
-    title = title
+    /title = @title
 
     link href='stylesheets/screen.css' media="screen, projection" rel="stylesheet" type="text/css"
 
   body
-    == yield
+    .container
+      header id='header'
+        hgroup
+          img src='images/moxie_logo.png' alt='Moxie Academy'
+
+      == yield
 
  

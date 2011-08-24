@@ -14,4 +14,5 @@ gem 'thin'
 
 group :development do
   gem 'dm-sqlite-adapter'
+  gem 'tux'
 end

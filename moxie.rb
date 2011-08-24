@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'sinatra/base'
 require 'data_mapper'
 require 'dm-validations'
@@ -7,8 +8,7 @@ class MoxieApp < Sinatra::Base
 
   # DATAMAPPER {{{
 
-  DataMapper.setup(:default,
-     ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/development.db")
+  DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/development.db")
 
   class User
     include DataMapper::Resource
@@ -20,6 +20,7 @@ class MoxieApp < Sinatra::Base
     property :last_name,  String
     property :start_date, DateTime
     property :end_date,   DateTime
+    property :paid,       Boolean, :default => false
 
     validates_presence_of :email
     validates_presence_of :password
@@ -37,7 +38,6 @@ class MoxieApp < Sinatra::Base
     property :ogv,        String
   end
   
-  DataMapper.finalize
   DataMapper.auto_upgrade!
 
   # END DataMapper }}}
@@ -46,11 +46,26 @@ class MoxieApp < Sinatra::Base
   set :public, File.dirname(__FILE__) + '/public'
   set :views, File.dirname(__FILE__) + '/views'
 
-  Slim::Engine.set_default_options :sections => true
+  set :sessions, true
+
+  configure :development do
+    enable :logging, :dump_errors, :raise_errors
+  end
+
+  #Slim::Engine.set_default_options :sections => true
 
   # END CONFIG }}}
   # HELPERS {{{
   helpers do
+    def authenticate_admin
+      unless session[:logged_in_as] == 'admin'
+        redirect '/login'
+      end
+    end
+
+    def true?
+      'true'
+    end
 
     # CRIBBED FROM THEPHILOSOPHER.ME {{{
     #def authenticate_admin
@@ -92,13 +107,16 @@ class MoxieApp < Sinatra::Base
   # END HELPERS }}}
   # ROUTES/CONTROLLERS {{{
 
-  # INDEX
+  # INDEX {{{
+
   get '/' do
     @title = 'Moxie Academy by Joy Tanksley'
     slim :index
   end
 
-  # LOG IN
+  # END INDEX }}}
+  # LOG IN {{{
+
   get '/login' do
     slim :'users/login'
   end
@@ -107,7 +125,9 @@ class MoxieApp < Sinatra::Base
     redirect to('/lessons')
   end
 
-  # LESSONS
+  # END LOGIN }}}
+  # LESSONS {{{
+
   get '/lessons' do
     slim :'lessons/index'
   end
@@ -117,14 +137,23 @@ class MoxieApp < Sinatra::Base
     slim :'lessons/show'
   end
 
-  # PAYMENT
+  # END LESSONS }}}
+  # PAYMENT {{{
+
   get '/users/payment' do
     slim :'users/payment'
   end
 
-  # ADMIN TASKS
+  # END PAYMENT }}}
+  # ADMIN TASKS {{{
+
   get '/admin' do
     slim :"admin/index"
+  end
+
+  # redirect
+  get '/admin/' do
+    redirect to('/admin')
   end
 
   get '/admin/new-lesson' do
@@ -136,9 +165,53 @@ class MoxieApp < Sinatra::Base
   end
 
   get '/admin/users' do
+    authenticate_admin
+    @users = MoxieApp::User.all
     slim :'admin/users'
   end
 
+  # END ADMIN }}}
+
   # END ROUTES }}}
+  # DEVELOPMENT ROUTES {{{
+
+  get '/development/add-users' do
+    u = MoxieApp::User.create(
+      :email => 'tmp@email.com',
+      :password => 'insecure',
+      :first_name => 'Charlie',
+      :last_name => 'Tanksley',
+      :start_date => 'September 2011',
+      :paid => false)
+    u2 = MoxieApp::User.create(
+      :email => 't@secondemail.com',
+      :password => 'insecure',
+      :first_name => 'Joy',
+      :last_name => 'Tanksley',
+      :start_date => 'September 2011',
+      :paid => true)
+    redirect to('/admin/users')
+  end
+
+  get '/development/remove-users' do
+    MoxieApp::Users.destroy!
+    redirect to('/admin/users')
+  end
+
+  get '/development/login-admin' do
+    session[:logged_in_as] = 'admin'
+    redirect to ('/admin/users')
+    #redirect to ('/development/wtf')
+  end
+
+  get '/development/logout' do
+    session[:logged_in_as] = nil
+  end
+  
+  get '/development/wtf' do
+    "#{session[:logged_in_as]}"
+  end
+  
+  # END DEVELOPMENT ROUTES }}}
 
 end
