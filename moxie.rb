@@ -180,7 +180,13 @@ class MoxieApp < Sinatra::Base
   end
 
   get '/users/payment' do
+    authenticate_logged_in
+    @user = MoxieApp::User.first(:email => session[:logged_in_as])
     slim :'users/payment'
+  end
+
+  post '/users/payment' do
+
   end
 
   # END USERS }}}
