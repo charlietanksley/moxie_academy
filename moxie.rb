@@ -62,12 +62,14 @@ class MoxieApp < Sinatra::Base
   helpers do
     def authenticate_admin
       unless session[:logged_in_as] == 'admin'
+        session[:back] = request.path_info
         redirect '/login'
       end
     end
 
     def authenticate_logged_in
       unless session[:logged_in] == true
+        session[:back] = request.path_info
         redirect '/login'
       end
     end
@@ -137,6 +139,9 @@ class MoxieApp < Sinatra::Base
     if user.password == encrypt_password(user, credentials[:password])
       session[:logged_in_as] = user.email
       session[:logged_in] = true
+      if session[:back]
+        redirect to(session[:back])
+      end
       redirect to('/')
     else
       redirect to('/login')
@@ -276,6 +281,10 @@ class MoxieApp < Sinatra::Base
   
   get '/development/wtf' do
     "#{session[:logged_in_as]}"
+  end
+
+  get '/development/route' do
+    "#{request.url}"
   end
   
   # END DEVELOPMENT ROUTES }}}
