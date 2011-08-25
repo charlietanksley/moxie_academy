@@ -9,6 +9,8 @@ GEM
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
       sass (~> 3.1)
+    compass-susy-plugin (0.9)
+      compass (>= 0.11.1)
     daemons (1.1.4)
     data_mapper (1.1.0)
       dm-aggregates (= 1.1.0)
@@ -107,6 +109,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt-ruby
   compass
+  compass-susy-plugin
   data_mapper
   dm-postgres-adapter
   dm-sqlite-adapter

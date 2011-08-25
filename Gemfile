@@ -17,6 +17,7 @@ group :development do
   gem 'dm-sqlite-adapter'
   gem 'tux'
   gem 'compass'
+  gem 'compass-susy-plugin'
   gem 'sass'
   gem 'foreman'
 end
