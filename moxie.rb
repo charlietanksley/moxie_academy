@@ -39,6 +39,10 @@ class MoxieApp < Sinatra::Base
     property :body,         Text
     property :video_title,  String
     property :poster_name,  String
+
+    validates_presence_of   :video_title
+    validates_presence_of   :slug
+    validates_uniqueness_of :slug
   end
   
   DataMapper.auto_upgrade!
