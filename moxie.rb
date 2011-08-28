@@ -87,40 +87,6 @@ class MoxieApp < Sinatra::Base
       response.headers['Cache-Control'] = 'public, max-age=86400'
     end
 
-    # CRIBBED FROM THEPHILOSOPHER.ME {{{
-    #def authenticate_admin
-    #  unless session['logged_in_as'] == 'charlietanksley'
-    #    redirect '/'
-    #  end
-    #end
-
-    #def authenticate( username )
-    #  unless session['logged_in_as'] == username or session['logged_in_as'] == 'charlietanksley'
-    #    redirect "/login/#{username}"
-    #  end
-    #end
-
-    #def login( username, auth_hash, redirect_target )
-    #  user = Person.where(:username => username).first
-    #  let_in = false
-    #  if user.provider.nil?
-    #    user.update_attributes(:uid => auth_hash['uid'], :provider => auth_hash['provider']) 
-    #    session['logged_in_as'] = username
-    #    let_in = true
-    #  elsif user.uid == auth_hash['uid']
-    #    if user.provider == auth_hash['provider']
-    #      session['logged_in_as'] = username
-    #      let_in = true
-    #    end
-    #  else
-    #    session['logged_in_as'] == nil
-    #  end
-    #  to_next = let_in ? redirect_target : "/login/#{username}"
-    #  redirect to_next
-    #end
-    #
-    # END }}}
-
   end
   
   
@@ -189,23 +155,13 @@ class MoxieApp < Sinatra::Base
     @user.salt = BCrypt::Engine.generate_salt
     @user.password = encrypt_password(@user, @user.password)
 
-    if @user.save!
+    if @user.save
       session[:logged_in_as] = @user.email
       session[:logged_in] = true
       redirect to('/lessons')
     else
       redirect to('/signup')
     end
-  end
-
-  get '/users/payment' do
-    authenticate_logged_in
-    @user = MoxieApp::User.first(:email => session[:logged_in_as])
-    slim :'users/payment'
-  end
-
-  post '/users/payment' do
-
   end
 
   # END USERS }}}
@@ -229,7 +185,7 @@ class MoxieApp < Sinatra::Base
   post '/admin/new-lesson' do
     authenticate_admin
     lesson = MoxieApp::Lesson.new(params[:lesson])
-    if lesson.save!
+    if lesson.save
       @lesson = lesson
       redirect ("/lessons/#{@lesson.slug}")
     else
