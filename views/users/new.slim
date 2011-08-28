@@ -1,7 +1,15 @@
+//- flash[:error]
+.error
+  p = flash[:error]
+
+
 .user-signup
-  p If you haven't already signed up, you can do that here.  You'll need the email address you enter (and password you create) below to log in to view the lessons.
+  p If you haven't already signed up, you can do that here.  You'll need the email address you enter (and password you create) below to log in to view the lessons.  And to sign up you'll need an invitation code (which I emailed you).
 
   form action='/signup' method='POST'
+    .input_section
+      label class='users' Invitation code:
+      input class='users' type='text' name='user[code]' label='Invitation Code'
     .input_section
       label class='users' Email:
       input class='users' type='text' name='user[email]' label='Email'

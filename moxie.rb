@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'sinatra/base'
+require 'rack-flash'
 require 'data_mapper'
 require 'dm-validations'
 require 'bcrypt'
@@ -44,6 +45,13 @@ class MoxieApp < Sinatra::Base
     validates_presence_of   :slug
     validates_uniqueness_of :slug
   end
+
+  class UserCode
+    include DataMapper::Resource
+
+    property :id,         Serial
+    property :code,       String
+  end
   
   DataMapper.auto_upgrade!
 
@@ -54,6 +62,7 @@ class MoxieApp < Sinatra::Base
   set :views, File.dirname(__FILE__) + '/views'
 
   set :sessions, true
+  use Rack::Flash
 
   configure :development do
     enable :logging, :dump_errors, :raise_errors
@@ -85,6 +94,10 @@ class MoxieApp < Sinatra::Base
     def cache_it
       # 1 day cache?
       response.headers['Cache-Control'] = 'public, max-age=86400'
+    end
+
+    def registration_code
+      MoxieApp::UserCode.first.code
     end
 
   end
@@ -151,15 +164,24 @@ class MoxieApp < Sinatra::Base
   end
 
   post '/signup' do
+    # Make sure the person is authorized
+    code = params[:user].delete('code')
+    unless code.downcase == registration_code
+      flash[:error] = 'You must have entered the wrong sign up code.  I\'m sorry; please try again.'
+      redirect to('/signup')
+    end
+
     @user = User.new(params[:user])
     @user.salt = BCrypt::Engine.generate_salt
     @user.password = encrypt_password(@user, @user.password)
 
-    if @user.save
+    if @user.save!
       session[:logged_in_as] = @user.email
       session[:logged_in] = true
+      flash[:notice] = 'Thank you so much for signing up!'
       redirect to('/lessons')
     else
+      flash[:error] = 'Something went wrong...'
       redirect to('/signup')
     end
   end
@@ -185,7 +207,7 @@ class MoxieApp < Sinatra::Base
   post '/admin/new-lesson' do
     authenticate_admin
     lesson = MoxieApp::Lesson.new(params[:lesson])
-    if lesson.save
+    if lesson.save!
       @lesson = lesson
       redirect ("/lessons/#{@lesson.slug}")
     else

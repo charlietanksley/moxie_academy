@@ -1,6 +1,7 @@
 source "http://rubygems.org"
 
 gem 'sinatra'
+gem 'rack-flash'
 
 # DB
 gem 'data_mapper'
