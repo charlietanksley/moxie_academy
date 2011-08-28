@@ -1,15 +1,31 @@
-h1 Create a lesson
+.new-lesson
+  h1 Create a lesson
 
-form action='/admin/new-lesson' method='POST'
-  p Title:
-  input type='text' name='lesson[title]' label='Title'
-  p Slug:
-  input type='text' name='lesson[slug]' label='Slug'
-  p Name of Video (do not include file type):
-  input type='text' name='lesson[video_title]' label='Name of Video'
-  p Name of Poster (include file type):
-  input type='text' name='lesson[poster_name]' label='Name of Poster'
-  p Text:
-  textarea name='lesson[body]' label='Lesson Body'
-  br
-  input type='submit' value='Create'
+  form action='/admin/new-lesson' method='POST'
+    p
+      ' Title
+      span.small (this is what the lesson is called)
+      ' :
+    input type='text' name='lesson[title]' label='Title'
+    p
+      ' Slug
+      span.small (the url; no spaces, all lowercase, e.g., 'lesson-one')
+      ' :
+    input type='text' name='lesson[slug]' label='Slug'
+    p
+      ' Name of Video
+      span.small (no filetype, e.g., 'video1')
+      ' :
+    input type='text' name='lesson[video_title]' label='Name of Video'
+    p
+      ' Name of Poster
+      span.small (do include file type, e.g., 'video1.jpg')
+      ' :
+    input type='text' name='lesson[poster_name]' label='Name of Poster'
+    p
+      ' Text
+      span.small (any content you want to show up above the video; just text!)
+      ' :
+    textarea rows=10 cols=40 name='lesson[body]' label='Lesson Body'
+    br
+    input.submit type='submit' value='Create'
