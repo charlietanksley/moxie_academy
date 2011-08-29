@@ -129,6 +129,29 @@ input.users
   +centered
 
 // END USERS }}}
+// ADMIN {{{
+
+.admin-groups, .admin-users, .admin-users, .admin-edit-lesson
+  +centered
+
+.admin-lessons 
+  @include full
+
+.nav
+  @include full
+  float: right
+  +horizontal-list
+  padding-right: 1em
+  li
+    padding: 0.5em
+  a
+    text-decoration: none
+    background: $red1
+    padding: 0.5em
+    +border-radius
+
+
+// }}}
 // NOTICES & ERRORS {{{
 
 .notice, .error

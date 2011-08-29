@@ -1,21 +1,38 @@
 .content
-  h2 Groups
-  table
-    tr
-      th Name
-      th Password
-    - @groups.each do |g|
-      tr
-        td = g.name
-        td = g.password
 
-  a name='#new'
-  h2 Create a Group
-  form action='/admin/new-group' method='POST'
-    p Group Name:
-    input type='text' name='group[name]'
-    p Password:
-    input type='text' name='group[password]'
-    br
-    input type='submit' value='Create'
-      
+  nav#admin_nav
+    ul.nav
+      li
+        a href='/lessons' Lessons
+      li
+        a href='/admin/new-lesson' New Lesson
+      li
+        a href='/admin/lessons' Edit Lessons
+      li
+        a href='/admin/users' Current Users
+      li
+        a href='/admin/groups' Current Groups
+      li
+        a href='/logout' Logout
+
+  .admin-groups
+    h2 Groups
+    table
+      tr
+        th Name
+        th Password
+      - @groups.each do |g|
+        tr
+          td = g.name
+          td = g.password
+
+    a name='#new'
+    h2 Create a Group
+    form action='/admin/new-group' method='POST'
+      p Group Name:
+      input type='text' name='group[name]'
+      p Password:
+      input type='text' name='group[password]'
+      br
+      input type='submit' value='Create'
+        

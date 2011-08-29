@@ -191,6 +191,19 @@ class MoxieApp < Sinatra::Base
     authenticate_admin
     @lesson = MoxieApp::Lesson.first(:id => params[:id])
     slim :'lessons/edit'
+
+  end
+
+  post '/admin/edit-lesson' do
+    authenticate_admin
+    lesson_info = remove_empty_fields(params[:lesson])
+    lesson = MoxieApp::Lesson.first(:id => lesson_info['id'])
+    if lesson.update lesson_info
+      flash[:notice] = 'Success!'
+      redirect to('/admin/lessons')
+    else
+      flash[:error] = 'Something went wrong :('
+    end
   end
 
   get '/admin/lessons/:id/destroy' do

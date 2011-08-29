@@ -1,23 +1,40 @@
 .content
-  h2 Lessons
-  table
-    tr
-      th Title
-      th Slug/URL
-      th Body
-      th Video
-      th Poster
-      th Edit
-      th Delete
-    - @lessons.each do |l|
+
+  nav#admin_nav
+    ul.nav
+      li
+        a href='/lessons' Lessons
+      li
+        a href='/admin/new-lesson' New Lesson
+      li
+        a href='/admin/lessons' Edit Lessons
+      li
+        a href='/admin/users' Current Users
+      li
+        a href='/admin/groups' Current Groups
+      li
+        a href='/logout' Logout
+
+  .admin-lessons
+    h2 Lessons
+    table
       tr
-        td = l.title
-        td = l.slug
-        td = l.body
-        td = l.video_title
-        td = l.poster_name
-        td
-          a href="/admin/lessons/#{l.id}/edit" Edit
-        td
-          a href="/admin/lessons/#{l.id}/destroy" Delete
-    
+        th Title
+        th Slug/URL
+        th Body
+        th Video
+        th Poster
+        th Edit
+        th Delete
+      - @lessons.each do |l|
+        tr
+          td = l.title
+          td = l.slug
+          td = l.body
+          td = l.video_title
+          td = l.poster_name
+          td
+            a href="/admin/lessons/#{l.id}/edit" Edit
+          td
+            a href="/admin/lessons/#{l.id}/destroy" Delete
+      
