@@ -105,7 +105,6 @@ class MoxieApp < Sinatra::Base
   # INDEX {{{
 
   get '/' do
-    cache_it
     @title = 'Moxie Academy by Joy Tanksley'
     slim :index
   end
@@ -114,7 +113,6 @@ class MoxieApp < Sinatra::Base
   # LOG IN {{{
 
   get '/login' do
-    cache_it
     slim :'users/login'
   end
 
@@ -152,14 +150,12 @@ class MoxieApp < Sinatra::Base
 
   get '/lessons' do
     authenticate_logged_in
-    cache_it
     @lessons = MoxieApp::Lesson.all
     slim :'lessons/index'
   end
 
   get '/lessons/:slug' do
     authenticate_logged_in
-    cache_it
     @lesson = Lesson.first(:slug => params[:slug])
     slim :'lessons/show'
   end
