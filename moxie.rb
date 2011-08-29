@@ -224,6 +224,15 @@ class MoxieApp < Sinatra::Base
     end
   end
 
+  # Destroy a user
+  get '/admin/users/:id/destroy' do
+    user = MoxieApp::User.first(:id => params[:id])
+    flash[:success] = "The account for #{user.email} has been removed"
+    user.destroy
+    redirect to('/admin/users')
+  end
+
+
   # Create a new user
   post '/admin/users/new' do
     authenticate_admin

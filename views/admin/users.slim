@@ -12,12 +12,15 @@
       th Email
       th Group
       th Edit
+      th Remove
     - @users.each do |u|
       tr
         td = u.email
         td = u.group.name
         td
           a href="/admin/users/#{u.id}/edit" Edit
+        td
+          a href="/admin/users/#{u.id}/destroy" Remove
 
   h2 Add new users
   form action='/admin/users/new' method='POST'
