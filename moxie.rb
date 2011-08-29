@@ -81,7 +81,7 @@ class MoxieApp < Sinatra::Base
     end
 
     def authenticate_logged_in
-      unless session[:logged_in] == true
+      unless session[:logged_in]
         session[:back] = request.path_info
         redirect '/login'
       end
@@ -166,6 +166,8 @@ class MoxieApp < Sinatra::Base
   # END USERS }}}
   # ADMIN TASKS {{{
 
+  # MAIN {{{
+
   get '/admin' do
     authenticate_admin
     slim :"admin/index"
@@ -175,7 +177,8 @@ class MoxieApp < Sinatra::Base
   get '/admin/' do
     redirect to('/admin')
   end
-
+  
+  # END MAIN }}}
   # ADMIN LESSON TASKS {{{
 
   get '/admin/lessons' do
@@ -295,15 +298,9 @@ class MoxieApp < Sinatra::Base
   # END ADMIN GROUP TASKS }}}
   
   # END ADMIN }}}
-  #
 
   # END ROUTES }}}
   # DEVELOPMENT ROUTES {{{
-
-  get '/development/remove-users' do
-    MoxieApp::Users.destroy!
-    redirect to('/admin/users')
-  end
 
   get '/development/login-admin' do
     session[:logged_in_as] = 'admin'
@@ -312,29 +309,14 @@ class MoxieApp < Sinatra::Base
   end
 
   get '/development/login-user' do
-    session[:logged_in_as] = 'tmp@email.com'
     session[:logged_in] = true
     redirect to ('/lessons')
   end
 
-  get '/development/login-user2' do
-    session[:logged_in_as] = 't@secondemail.com'
-    session[:logged_in] = true
-    redirect to ('/lessons')
-  end
-
-  get '/development/logout' do
-    session[:logged_in_as] = nil
-  end
-  
   get '/development/wtf' do
-    "#{session[:logged_in_as]}"
+    "#{session}<br/>#{session[:logged_in] ? 'logged in' : 'not'}"
   end
 
-  get '/development/route' do
-    "#{request.url}"
-  end
-  
   # END DEVELOPMENT ROUTES }}}
 
 end
