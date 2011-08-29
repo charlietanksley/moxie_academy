@@ -136,6 +136,18 @@ class MoxieApp < Sinatra::Base
   end
 
   # END LOGIN }}}
+  # LOGOUT {{{
+
+  get '/logout' do
+    session[:logged_in_as] = nil
+    session[:logged_in] = nil
+    flash[:notice] = 'You have successfully logged out.'
+    redirect to('/login')
+  end
+
+  
+  
+  # END LOGOUT }}}
   # LESSONS {{{
 
   get '/lessons' do
@@ -168,12 +180,29 @@ class MoxieApp < Sinatra::Base
     redirect to('/admin')
   end
 
+  # ADMIN LESSON TASKS {{{
+
   get '/admin/lessons' do
     authenticate_admin
     @lessons = MoxieApp::Lesson.all
     slim :'admin/lessons'
   end
 
+  get '/admin/lessons/:id/edit' do
+    authenticate_admin
+    @lesson = MoxieApp::Lesson.first(:id => params[:id])
+    slim :'lessons/edit'
+  end
+
+  get '/admin/lessons/:id/destroy' do
+    authenticate_admin
+    lesson = MoxieApp::Lesson.first(:id => params[:id])
+    flash[:notice] = "The lesson '#{lesson.title}' has been removed"
+    lesson.destroy
+    redirect to('/admin/lessons')
+  end
+
+  # New lesson
   get '/admin/new-lesson' do
     authenticate_admin
     slim :'lessons/new'
@@ -190,6 +219,9 @@ class MoxieApp < Sinatra::Base
       redirect to('/lessons/new-lesson')
     end
   end
+
+  # END ADMIN LESSON TASKS }}}
+  # ADMIN USER TASKS {{{
 
   get '/admin/users' do
     authenticate_admin
@@ -243,7 +275,31 @@ class MoxieApp < Sinatra::Base
     end
   end
 
+  # END ADMIN USER TASKS }}}
+  # ADMIN GROUP TASKS {{{
+  
+  get '/admin/groups' do
+    authenticate_admin
+    @groups = MoxieApp::Group.all
+    slim :'admin/groups'
+  end
+  
+  post '/admin/new-group' do
+    authenticate_admin
+    group = MoxieApp::Group.new(params[:group])
+    if group.save
+      flash[:notice] = 'Group created.'
+      redirect ("/admin/groups")
+    else
+      flash[:error] = "Sorry, something went wrong!"
+      redirect to('/admin/groups#new')
+    end
+  end
+
+  # END ADMIN GROUP TASKS }}}
+  
   # END ADMIN }}}
+  #
 
   # END ROUTES }}}
   # DEVELOPMENT ROUTES {{{

@@ -1,0 +1,23 @@
+.content
+  h2 Lessons
+  table
+    tr
+      th Title
+      th Slug/URL
+      th Body
+      th Video
+      th Poster
+      th Edit
+      th Delete
+    - @lessons.each do |l|
+      tr
+        td = l.title
+        td = l.slug
+        td = l.body
+        td = l.video_title
+        td = l.poster_name
+        td
+          a href="/admin/lessons/#{l.id}/edit" Edit
+        td
+          a href="/admin/lessons/#{l.id}/destroy" Delete
+    
