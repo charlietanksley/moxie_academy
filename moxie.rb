@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'sinatra/base'
+require 'thin'
 require 'rack-flash'
 require 'data_mapper'
 require 'dm-validations'
@@ -14,21 +15,24 @@ class MoxieApp < Sinatra::Base
 
   class User
     include DataMapper::Resource
-    include BCrypt
 
     property :id,         Serial
     property :email,      String
-    property :password,   String
-    property :salt,       String
-    property :first_name, String
-    property :last_name,  String
-    property :start_date, DateTime
-    property :end_date,   DateTime
-    property :paid,       Boolean, :default => false
+    property :group_id,   Integer
 
-    validates_presence_of   :email
+    belongs_to :group
+  end
+
+  class Group
+    include DataMapper::Resource
+
+    property :id,         Serial
+    property :name,       String
+    property :password,   String
+
+    has n, :users
+    validates_uniqueness_of :name
     validates_presence_of   :password
-    validates_uniqueness_of :email
   end
 
   class Lesson
@@ -46,13 +50,7 @@ class MoxieApp < Sinatra::Base
     validates_uniqueness_of :slug
   end
 
-  class UserCode
-    include DataMapper::Resource
-
-    property :id,         Serial
-    property :code,       String
-  end
-  
+  DataMapper.finalize
   DataMapper.auto_upgrade!
 
   # END DataMapper }}}
@@ -87,17 +85,13 @@ class MoxieApp < Sinatra::Base
       end
     end
 
-    def encrypt_password(user, password)
-      BCrypt::Engine.hash_secret(password, user.salt)
-    end
-
     def cache_it
       # 1 day cache?
       response.headers['Cache-Control'] = 'public, max-age=86400'
     end
 
-    def registration_code
-      MoxieApp::UserCode.first.code
+    def remove_empty_fields(hash)
+      hash.select { |k,v| v != '' }
     end
 
   end
@@ -126,7 +120,7 @@ class MoxieApp < Sinatra::Base
     credentials = params[:login]
     user = MoxieApp::User.first(:email => credentials[:email])
           
-    if user.password == encrypt_password(user, credentials[:password])
+    if user.group.password == credentials[:password]
       session[:logged_in_as] = user.email
       session[:logged_in] = true
       if session[:back]
@@ -134,6 +128,7 @@ class MoxieApp < Sinatra::Base
       end
       redirect to('/')
     else
+      flash[:error] = 'There seems to have been a problem.  Please enter your email and password again.'
       redirect to('/login')
     end
   end
@@ -158,34 +153,6 @@ class MoxieApp < Sinatra::Base
   # END LESSONS }}}
   # USERS {{{
 
-  get '/signup' do
-    cache_it
-    slim :'users/new'
-  end
-
-  post '/signup' do
-    # Make sure the person is authorized
-    code = params[:user].delete('code')
-    unless code.downcase == registration_code
-      flash[:error] = 'You must have entered the wrong sign up code.  I\'m sorry; please try again.'
-      redirect to('/signup')
-    end
-
-    @user = User.new(params[:user])
-    @user.salt = BCrypt::Engine.generate_salt
-    @user.password = encrypt_password(@user, @user.password)
-
-    if @user.save!
-      session[:logged_in_as] = @user.email
-      session[:logged_in] = true
-      flash[:notice] = 'Thank you so much for signing up!'
-      redirect to('/lessons')
-    else
-      flash[:error] = 'Something went wrong...'
-      redirect to('/signup')
-    end
-  end
-
   # END USERS }}}
   # ADMIN TASKS {{{
 
@@ -199,6 +166,16 @@ class MoxieApp < Sinatra::Base
     redirect to('/admin')
   end
 
+  get '/admin/lessons' do
+    authenticate_admin
+    @lessons = MoxieApp::Lesson.all
+    slim :'admin/lessons'
+  end
+
+  #post '/admin/lessons' do
+  #  authenticate_admin
+  #end
+
   get '/admin/new-lesson' do
     authenticate_admin
     slim :'lessons/new'
@@ -211,38 +188,57 @@ class MoxieApp < Sinatra::Base
       @lesson = lesson
       redirect ("/lessons/#{@lesson.slug}")
     else
-      "Sorry, something went wrong!"
+      flash[:error] = "Sorry, something went wrong!"
+      redirect to('/lessons/new-lesson')
     end
   end
 
   get '/admin/users' do
     authenticate_admin
     @users = MoxieApp::User.all
+    @groups = MoxieApp::Group.all
     slim :'admin/users'
+  end
+
+  # Edit an individual user
+  get '/admin/users/:id' do
+    authenticate_admin
+    @user = MoxieApp::User.first(:id => params[:id])
+    slim :'admin/edit-user'
+  end
+
+  post '/admin/edit-user' do
+    authenticate_admin
+    credentials = remove_empty_fields(params[:user])
+    user = MoxieApp::User.first(:id => credentials[:id])
+    user.update credentials
+    if user.save!
+      flash[:notice] = 'Success!'
+      redirect to('/admin/users')
+    else
+      flash[:error] = 'Something went wrong :('
+      redirect to('/admin/users')
+    end
+  end
+
+  # Create a new user
+  post '/admin/users/new' do
+    authenticate_admin
+    credentials = params[:user]
+    user = MoxieApp::User.new(credentials)
+    if user.save!
+      flash[:notice] = 'Success!'
+      redirect to('/admin/users')
+    else
+      flash[:error] = 'Something went wrong :('
+      redirect to('/admin/users')
+    end
   end
 
   # END ADMIN }}}
 
   # END ROUTES }}}
   # DEVELOPMENT ROUTES {{{
-
-  get '/development/add-users' do
-    u = MoxieApp::User.create(
-      :email => 'tmp@email.com',
-      :password => 'insecure',
-      :first_name => 'Charlie',
-      :last_name => 'Tanksley',
-      :start_date => 'September 2011',
-      :paid => false)
-    u2 = MoxieApp::User.create(
-      :email => 't@secondemail.com',
-      :password => 'insecure',
-      :first_name => 'Joy',
-      :last_name => 'Tanksley',
-      :start_date => 'September 2011',
-      :paid => true)
-    redirect to('/admin/users')
-  end
 
   get '/development/remove-users' do
     MoxieApp::Users.destroy!

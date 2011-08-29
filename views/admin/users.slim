@@ -1,12 +1,24 @@
 .content#current_users
-  ul
+  h2 Current users
+  table
+    tr
+      th Email
+      th Group
+      th Edit
     - @users.each do |u|
-      li
-        ul
-          li = u.first_name
-          li = u.last_name
-          li = u.email
-          li = u.start_date
-          - paid = u.paid ? 'Paid' : 'Not Paid'
-          li = paid
+      tr
+        td = u.email
+        td = u.group.name
+        td
+          a href="/admin/edit/#{u.id}" Edit
+
+  h2 Add new users
+  form action='/admin/users/new' method='POST'
+    p Email:
+    input type='text' name='user[email]'
+    p Group:
+    - @groups.each do |g|
+      input type='checkbox' value="#{g.name}" name='user[group_id]'
+    br
+    input type='submit' value='Create'
       
