@@ -174,10 +174,6 @@ class MoxieApp < Sinatra::Base
     slim :'admin/lessons'
   end
 
-  #post '/admin/lessons' do
-  #  authenticate_admin
-  #end
-
   get '/admin/new-lesson' do
     authenticate_admin
     slim :'lessons/new'
@@ -213,7 +209,6 @@ class MoxieApp < Sinatra::Base
   post '/admin/edit-user' do
     authenticate_admin
     credentials = remove_empty_fields(params[:user])
-    #"#{credentials}"
     user = MoxieApp::User.first(:id => credentials['id'])
     if user.update credentials
       flash[:notice] = 'Success!'
@@ -226,8 +221,9 @@ class MoxieApp < Sinatra::Base
 
   # Destroy a user
   get '/admin/users/:id/destroy' do
+    authenticate_admin
     user = MoxieApp::User.first(:id => params[:id])
-    flash[:success] = "The account for #{user.email} has been removed"
+    flash[:notice] = "The account for #{user.email} has been removed"
     user.destroy
     redirect to('/admin/users')
   end
