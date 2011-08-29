@@ -21,6 +21,8 @@ class MoxieApp < Sinatra::Base
     property :group_id,   Integer
 
     belongs_to :group
+    validates_presence_of   :email
+    validates_presence_of   :group_id
   end
 
   class Group
@@ -201,18 +203,19 @@ class MoxieApp < Sinatra::Base
   end
 
   # Edit an individual user
-  get '/admin/users/:id' do
+  get '/admin/users/:id/edit' do
     authenticate_admin
     @user = MoxieApp::User.first(:id => params[:id])
+    @groups = MoxieApp::Group.all
     slim :'admin/edit-user'
   end
 
   post '/admin/edit-user' do
     authenticate_admin
     credentials = remove_empty_fields(params[:user])
-    user = MoxieApp::User.first(:id => credentials[:id])
-    user.update credentials
-    if user.save!
+    #"#{credentials}"
+    user = MoxieApp::User.first(:id => credentials['id'])
+    if user.update credentials
       flash[:notice] = 'Success!'
       redirect to('/admin/users')
     else
@@ -226,7 +229,7 @@ class MoxieApp < Sinatra::Base
     authenticate_admin
     credentials = params[:user]
     user = MoxieApp::User.new(credentials)
-    if user.save!
+    if user.save
       flash[:notice] = 'Success!'
       redirect to('/admin/users')
     else

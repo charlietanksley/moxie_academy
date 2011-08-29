@@ -1,3 +1,10 @@
+- if flash[:notice]
+  .notice
+    p = flash[:notice]
+- if flash[:error]
+  .error
+    p = flash[:error]
+
 .content#current_users
   h2 Current users
   table
@@ -10,7 +17,7 @@
         td = u.email
         td = u.group.name
         td
-          a href="/admin/edit/#{u.id}" Edit
+          a href="/admin/users/#{u.id}/edit" Edit
 
   h2 Add new users
   form action='/admin/users/new' method='POST'
@@ -18,7 +25,7 @@
     input type='text' name='user[email]'
     p Group:
     - @groups.each do |g|
-      input type='checkbox' value="#{g.name}" name='user[group_id]'
+      input type='checkbox' value="#{g.id}" name='user[group_id]' = " #{g.name}"
     br
     input type='submit' value='Create'
       

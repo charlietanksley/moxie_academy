@@ -1,0 +1,25 @@
+- if flash[:notice]
+  .notice
+    p = flash[:notice]
+- if flash[:error]
+  .error
+    p = flash[:error]
+
+.content
+
+  h2
+    ' Edit user info for
+    = @user.email
+  form action='/admin/edit-user' method='POST'
+    input type='hidden' name='user[id]' value="#{@user.id}"
+    p Email:
+    input type='text' name='user[email]' value="#{@user.email}"
+    p
+      ' Current Group:
+      = @user.group.name
+    p Change Group:
+    - @groups.each do |g|
+      input type='checkbox' value="#{g.id}" name='user[group_id]' = " #{g.name}"
+    br
+    input type='submit' value='Update'
+      
