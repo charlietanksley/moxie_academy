@@ -4,6 +4,168 @@
 
 /* Layout ------------------------------------------------------------------
 
+
+html
+  //background-image: url('../images/soft_circle_scales.png')
+  background-image: url('../images/whitey.png')
+  //background-image: url('../images/vichy.png')
+
+body
+  +adjust-font-size-to(22px)
+  +serif-font
+
+
 .container
   +container
-  +susy-grid-background
+  margin-top: 50px
+
+
+h1, h2, h3, h4, h5, h6
+  +sans-font
+
+span.small
+  +adjust-font-size-to(13.537px)
+
+a
+  color: $dblue
+  &:visited
+    color: $dblue
+  &:hover, &:focus, &:active
+    color: $lblue
+
+a.no-change
+  &:hover, &:focus, &:active
+    color: $dblue
+
+ul.plain
+  list-style-type: none
+
+
+#header
+  margin-bottom: 50px
+  img
+    display: block
+    margin: 0 auto
+
+#nav
+  @include full
+
+// INDEX {{{
+
+#home
+  text-align: center
+  .welcome
+    +adjust-font-size-to(31.435px)
+  .lessons
+    +adjust-font-size-to(31.435px)
+    @include full
+    a
+      text-decoration: none
+      background: $red1
+      padding: 0.5em
+      &:hover, &:active
+        background: $red2
+  .signup
+    @include full
+
+// END INDEX }}}
+// LESSONS {{{
+
+.lesson
+  +centered
+
+video
+  display: block
+  margin: 0 auto
+
+.navigation
+  +centered
+  text-align: right
+
+.vjs-no-video
+  +adjust-font-size-to(8.404px)
+  text-align: right
+
+  a
+    text-decoration: none
+    color: $lblue
+
+input, textarea
+  margin-left: 1em
+input.submit
+  margin-left: 0
+  margin-top: 1em
+
+
+// END LESSONS }}}
+// USERS {{{
+
+.user-signup
+  +centered
+
+label.users
+  @include columns(2,6)
+
+input.users
+  padding-top: 0.5em
+  @include columns(3,6)
+  @include omega(6)
+
+.input_section
+  @include columns(6,6)
+  padding-bottom: 1em
+.submit
+  text-align: right
+  input
+    background: $red1
+    color: $dblue
+    &:hover
+      background: $red2
+      color: $dblue
+
+.login
+  h1
+    text-align: center
+  +centered
+
+// END USERS }}}
+// ADMIN {{{
+
+.admin-groups, .admin-users, .admin-users, .admin-edit-lesson
+  +centered
+
+.admin-lessons 
+  @include full
+
+.lesson-row
+  @include full
+.new-lesson
+  @include columns(6,12)
+.sample-lesson
+  +adjust-font-size-to(13.537px)
+  @include columns(6,12)
+  @include omega(12)
+
+.nav
+  @include full
+  float: right
+  +horizontal-list
+  padding-right: 1em
+  li
+    padding: 0.5em
+  a
+    text-decoration: none
+    background: $red1
+    padding: 0.5em
+    +border-radius
+
+
+// }}}
+// NOTICES & ERRORS {{{
+
+.notice, .error
+  text-align: center
+
+
+// END NOTICES & ERRORS }}}
+

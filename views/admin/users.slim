@@ -1,0 +1,44 @@
+.content
+
+  nav#admin_nav
+    ul.nav
+      li
+        a href='/lessons' Lessons
+      li
+        a href='/admin/new-lesson' New Lesson
+      li
+        a href='/admin/lessons' Edit Lessons
+      li
+        a href='/admin/users' Current Users
+      li
+        a href='/admin/groups' Current Groups
+      li
+        a href='/logout' Logout
+
+  .admin-users
+    h2 Current users
+    table
+      tr
+        th Email
+        th Group
+        th Edit
+        th Remove
+      - @users.each do |u|
+        tr
+          td = u.email
+          td = u.group.name
+          td
+            a href="/admin/users/#{u.id}/edit" Edit
+          td
+            a href="/admin/users/#{u.id}/destroy" Remove
+
+    h2 Add new users
+    form action='/admin/users/new' method='POST'
+      p Email:
+      input type='text' name='user[email]'
+      p Group:
+      - @groups.each do |g|
+        input type='checkbox' value="#{g.id}" name='user[group_id]' = " #{g.name}"
+      br
+      input type='submit' value='Create'
+        

@@ -1,0 +1,62 @@
+ <!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Moxie Academy by Joy Tanksley</title>
+
+
+  <script type="text/javascript" src="/public/js/video.js"></script>
+
+  <!--<link rel="stylesheet" src="normalize-css.googlecode.com/svn/trunk/normalize.css" />-->
+  <link href="stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+
+
+</head>
+<body id='home'>
+  <div class='container'>
+
+    <header id='header'>
+      <hgroup>
+        <img src='images/moxie_logo.png' alt='Moxie Academy' />
+      </hgroup>
+    </header>
+
+    <div class='content'>
+
+      <!-- LEFT COLUMN (VideoJS) {{{-->
+
+      <div class='left_column'>
+
+        <div class="video-js-box">
+          <!-- Using the Video for Everybody Embed Code http://camendesign.com/code/video_for_everybody -->
+          <video class="video-js" width="320" height="240" controls preload poster="http://www.joytanksley.com/boogie/assets/images/test.jpg">
+            <source src="http://www.joytanksley.com/boogie/assets/video/test.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
+            <source src="http://www.joytanksley.com/boogie/assets/video/test.webm" type='video/webm; codecs="vp8, vorbis"' />
+            <source src="http://www.joytanksley.com/boogie/assets/video/test.ogv" type='video/ogg; codecs="theora, vorbis"' />
+            <!-- Flash Fallback. Use any flash video player here. Make sure to keep the vjs-flash-fallback class. -->
+            <object id="flash_fallback_1" class="vjs-flash-fallback" width="320" height="240" type="application/x-shockwave-flash" 
+              data="http://releases.flowplayer.org/swf/flowplayer-3.2.1.swf">
+              <param name="movie" value="http://releases.flowplayer.org/swf/flowplayer-3.2.1.swf" />
+              <param name="allowfullscreen" value="true" />
+              <param name="flashvars" 
+                value='config={"playlist":["http://www.joytanksley.com/boogie/assets/images/test.jpg", {"url": "http://www.joytanksley.com/boogie/assets/video/test.mp4","autoPlay":false,"autoBuffering":true}]}' />
+              <!-- Image Fallback. Typically the same as the poster image. -->
+              <img src="http://www.joytanksley.com/boogie/assets/images/test.jpg" width="320" height="240" alt="Poster Image" 
+                title="No video playback capabilities." />
+            </object>
+          </video>
+          <p class="vjs-no-video">
+            <!-- Support VideoJS by keeping this link. -->
+            <a href="http://videojs.com">HTML5 Video Player</a> by VideoJS
+          </p>
+        </div>
+
+      </div>
+
+      <!-- END LEFT COLUMN (VideoJS) }}}--> 
+
+    </div>
+  </div>
+	
+</body>
+</html>

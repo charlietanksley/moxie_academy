@@ -1,6 +1,13 @@
+// SCALE:
+  http://modularscale.com/scale/?px1=22&px2=564&ra1=1.618&ra2=0
+
 // Imports -------------------------------------------------------------------
 
+@import normalize
 @import susy
+@import compass/typography/vertical_rhythm
+@import "compass/typography/lists/horizontal-list"
+@import "compass/css3/border-radius"
 
 // Grid ----------------------------------------------------------------------
 
@@ -9,4 +16,27 @@ $col-width: 4em
 $gutter-width: 1em
 $side-gutter-width: $gutter-width
 
-$show-grid-backgrounds: true
+$show-grid-backgrounds: false
+
+$base-font-size: 16px
+$base-line-height: 24px
+
+$red1:  #DD3D71
+$red2:  #E14C2C
+$lblue: #573CDC
+$dblue: #1e115d
+$bblue: #C747E7
+//$red1: #B50830
+//$red2: #C30C2C
+//$lblue: #3E1FB9
+//$dblue: #21028A
+//$bblue: #87B0DC
+
+=serif-font
+  font-family: baskerville, palatino, 'palatino linotype', georgia, serif
+=sans-font
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif
+
+=centered
+  @include columns(6,12)
+  @include pad(3)

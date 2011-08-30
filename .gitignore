@@ -1,2 +1,5 @@
+Procfile
 .sass-cache
 tmp/
+.rvmrc
+*.db

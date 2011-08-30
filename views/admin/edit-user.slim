@@ -1,0 +1,35 @@
+.content
+
+  nav#admin_nav
+    ul.nav
+      li
+        a href='/lessons' Lessons
+      li
+        a href='/admin/new-lesson' New Lesson
+      li
+        a href='/admin/lessons' Edit Lessons
+      li
+        a href='/admin/users' Current Users
+      li
+        a href='/admin/groups' Current Groups
+      li
+        a href='/logout' Logout
+
+
+  .admin-users
+    h2
+      ' Edit user info for
+      = @user.email
+    form action='/admin/edit-user' method='POST'
+      input type='hidden' name='user[id]' value="#{@user.id}"
+      p Email:
+      input type='text' name='user[email]' value="#{@user.email}"
+      p
+        ' Current Group:
+        = @user.group.name
+      p Change Group:
+      - @groups.each do |g|
+        input type='checkbox' value="#{g.id}" name='user[group_id]' = " #{g.name}"
+      br
+      input type='submit' value='Update'
+        

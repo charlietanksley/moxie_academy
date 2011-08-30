@@ -1,0 +1,37 @@
+doctype html
+html lang="en"
+  head
+    meta charset="UTF-8"
+    title = @title
+
+    link href='/stylesheets/screen.css' media="screen, projection" rel="stylesheet" type="text/css"
+
+  body
+    .container
+      header id='header'
+        hgroup
+          img src='/images/moxie_logo.png' alt='Moxie Academy'
+
+      - unless no_header?
+        nav#nav
+          ul.nav
+            li
+              a href='/' Home
+            li
+              a href='/lessons' Lessons
+            li
+              a href='/logout' Logout
+
+
+
+
+      - if flash[:notice]
+        .notice
+          p = flash[:notice]
+      - if flash[:error]
+        .error
+          p = flash[:error]
+
+      == yield
+
+ 
