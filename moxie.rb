@@ -330,6 +330,8 @@ class MoxieApp < Sinatra::Base
   # END ADMIN }}}
 
   # END ROUTES }}}
+end
+__END__
   # DEVELOPMENT ROUTES {{{
 
   get '/development/login-admin' do
