@@ -133,23 +133,6 @@ class MoxieApp < Sinatra::Base
     end
   end
 
-  get '/admin/login' do
-    slim :'admin/login'
-  end
-
-  post '/admin/login' do
-    credentials = params[:login]
-    if credentials[:name] == 'admin' && credentials[:password] == ENV['ADMIN_PASSWORD']
-      session[:logged_in_as] = 'admin'
-      session[:logged_in] = true
-      redirect to('/admin')
-    else
-      flash[:error] = 'There seems to have been a problem.  Please enter your email and password again.'
-      redirect to('/admin/login')
-    end
-
-  end
-
   # END LOGIN }}}
   # LOGOUT {{{
 
@@ -196,6 +179,26 @@ class MoxieApp < Sinatra::Base
   end
   
   # END MAIN }}}
+  # ADMIN LOGIN {{{
+
+  get '/admin/login' do
+    slim :'admin/login'
+  end
+
+  post '/admin/login' do
+    credentials = params[:login]
+    if credentials[:name] == 'admin' && credentials[:password] == ENV['ADMIN_PASSWORD']
+      session[:logged_in_as] = 'admin'
+      session[:logged_in] = true
+      redirect to('/admin')
+    else
+      flash[:error] = 'There seems to have been a problem.  Please enter your email and password again.'
+      redirect to('/admin/login')
+    end
+
+  end
+
+  # END ADMIN LOGIN }}}
   # ADMIN LESSON TASKS {{{
 
   get '/admin/lessons' do
