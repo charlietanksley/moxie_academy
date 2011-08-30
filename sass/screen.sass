@@ -87,9 +87,6 @@ video
     text-decoration: none
     color: $lblue
 
-.new-lesson
-  +centered
-
 input, textarea
   margin-left: 1em
 input.submit
@@ -136,6 +133,13 @@ input.users
 
 .admin-lessons 
   @include full
+
+.new-lesson
+  @include columns(6,12)
+.sample-lesson
+  +adjust-font-size-to(13.537px)
+  @include columns(6,12)
+  @include omega(12)
 
 .nav
   @include full
