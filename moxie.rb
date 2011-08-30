@@ -96,6 +96,10 @@ class MoxieApp < Sinatra::Base
       hash.select { |k,v| v != '' }
     end
 
+    def no_header?
+      ['/', '/login', '/admin/login'].include?(request.path_info) ? true : false
+    end
+
   end
   
   

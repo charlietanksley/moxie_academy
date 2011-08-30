@@ -10,8 +10,20 @@ html lang="en"
     .container
       header id='header'
         hgroup
-          a href='/'
-            img src='/images/moxie_logo.png' alt='Moxie Academy'
+          img src='/images/moxie_logo.png' alt='Moxie Academy'
+
+      - unless no_header?
+        nav#nav
+          ul.nav
+            li
+              a href='/' Home
+            li
+              a href='/lessons' Lessons
+            li
+              a href='/logout' Logout
+
+
+
 
       - if flash[:notice]
         .notice
