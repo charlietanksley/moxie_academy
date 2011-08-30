@@ -76,7 +76,7 @@ class MoxieApp < Sinatra::Base
     def authenticate_admin
       unless session[:logged_in_as] == 'admin'
         session[:back] = request.path_info
-        redirect '/login'
+        redirect '/admin/login'
       end
     end
 
@@ -121,7 +121,7 @@ class MoxieApp < Sinatra::Base
     user = MoxieApp::User.first(:email => credentials[:email])
           
     if user.group.password == credentials[:password]
-      session[:logged_in_as] = user.email
+      session[:logged_in_as] = user.group_id
       session[:logged_in] = true
       if session[:back]
         redirect to(session[:back])
@@ -131,6 +131,23 @@ class MoxieApp < Sinatra::Base
       flash[:error] = 'There seems to have been a problem.  Please enter your email and password again.'
       redirect to('/login')
     end
+  end
+
+  get '/admin/login' do
+    slim :'admin/login'
+  end
+
+  post '/admin/login' do
+    credentials = params[:login]
+    if credentials[:name] == 'admin' && credentials[:password] == ENV['ADMIN_PASSWORD']
+      session[:logged_in_as] = 'admin'
+      session[:logged_in] = true
+      redirect to('/admin')
+    else
+      flash[:error] = 'There seems to have been a problem.  Please enter your email and password again.'
+      redirect to('/admin/login')
+    end
+
   end
 
   # END LOGIN }}}

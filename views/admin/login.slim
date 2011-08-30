@@ -1,0 +1,13 @@
+.login
+  h1 Admin Login
+
+  form action='/admin/login' method='POST'
+    .input_section
+      label.users Name
+      input.users type='text' name='login[name]' label='Name'
+    .input_section
+      label.users Password
+      input.users type='text' name='login[password]' label='Password'
+    .input_section.submit
+      input type='submit' value='Sign In'
+
