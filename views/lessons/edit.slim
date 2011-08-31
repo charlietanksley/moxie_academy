@@ -46,7 +46,7 @@
         ' Text
         span.small (any content you want to show up above the video; just text!)
         ' :
-      textarea rows=10 cols=40 name='lesson[body]' label='Lesson Body' value="#{@lesson.body}"
+      textarea rows=10 cols=40 name='lesson[body]' label='Lesson Body' value="#{@lesson.body}" = @lesson.body
       br
       input.submit type='submit' value='Update'
 
