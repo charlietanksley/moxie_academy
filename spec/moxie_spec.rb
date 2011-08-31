@@ -12,21 +12,21 @@ describe "My App" do
 
 end
 
-describe 'If you are not logged in, the app is basically worthless', :type => :request do
+describe 'If you are not logged in, you', :type => :request do
 
-  it "requires login to access lessons" do
+  it "get redirected when you try to view the lessons overview" do
     visit ('/lessons')
     current_path.should eq('/login')
   end
 
-  it "requires login to access a given lesson" do
+  it "get redirected when you try to view a specific lesson" do
     visit '/lessons/first'
     current_path.should eq('/login')
   end
 
 end
 
-describe 'If you are logged in, we get content', :type => :request do
+describe 'If you are logged in, you', :type => :request do
 
   before(:all) do
     MoxieApp::Group.create(:name => 'Test', :password => 'password')
@@ -41,17 +41,17 @@ describe 'If you are logged in, we get content', :type => :request do
     click_button 'Sign In'
   end
     
-  it 'shows me the lessons page' do
+  it 'can view the lessons overview page' do
     visit '/lessons'
     current_path.should eq('/lessons')
   end
 
-  it 'shows me the page for a specific lesson, at its slug' do
+  it 'can view a specific lesson' do
     visit '/lessons/test'
     current_path.should eq('/lessons/test')
   end
 
-  it 'sends me to a 404 page when there is no such lesson' do
+  it 'get redirected if the page does not exist' do
     visit '/lessons/does-not-exist'
     current_path.should eq('/')
   end
