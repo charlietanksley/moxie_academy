@@ -160,8 +160,12 @@ class MoxieApp < Sinatra::Base
 
   get '/lessons/:slug' do
     authenticate_logged_in
-    @lesson = Lesson.first(:slug => params[:slug])
-    slim :'lessons/show'
+    begin
+      @lesson = Lesson.first(:slug => params[:slug])
+      slim :'lessons/show'
+    rescue
+      not_found
+    end
   end
 
   # END LESSONS }}}
@@ -335,6 +339,13 @@ class MoxieApp < Sinatra::Base
   # END ADMIN GROUP TASKS }}}
   
   # END ADMIN }}}
+  # ERRORS {{{
+
+  not_found do
+    redirect to('/')
+  end
+
+  # END ERRORS }}}
 
   # END ROUTES }}}
 end
