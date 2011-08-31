@@ -7,7 +7,7 @@ require 'sinatra'
 require 'capybara'
 require 'capybara/rspec'
 require 'capybara/dsl'
-#require 'database_cleaner'
+require 'database_cleaner'
 
 Capybara.app = MoxieApp
 set :environment, :test
@@ -17,20 +17,20 @@ set :logging, false
 
 
 
-RSpec.configure do |conf|
-  conf.include Rack::Test::Methods
+RSpec.configure do |config|
+  config.include Rack::Test::Methods
 
-  #config.before(:suite) do
-  #  DatabaseCleaner.strategy = :truncation
-  #  DatabaseCleaner.orm = "datamapper"
-  #end
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.clean_with(:truncation)
+  end
 
-  #config.before(:each) do
-  #  DatabaseCleaner.start
-  #end
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
 
-  #config.after(:each) do
-  #  DatabaseCleaner.clean
-  #end
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
 
 end
