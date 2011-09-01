@@ -89,8 +89,7 @@ describe 'Within the admin section,', :type => :request do
     end
 
     it 'edit a lesson' do
-      #i = MoxieApp::Lesson.create(:title => 'whatever', :slug => @slug, :video_title => 'sure')
-      i = create_new('Lesson', {:title => 'whatever', :slug => @slug, :video_title => 'sure'})
+      i = MoxieApp::Lesson.create(:title => 'whatever', :slug => @slug, :video_title => 'sure')
       visit "/admin/lessons/#{i.id}/edit"
       fill_in 'lesson[title]', :with => 'This has changed'
       click_button 'Update'
@@ -124,64 +123,20 @@ describe 'Within the admin section,', :type => :request do
     end
 
     it 'view all users' do
-      visit '/admin/users'
+      visit admin_user_path
       page.has_xpath?('//table/tr')
       page.has_content? 'Edit'
       page.has_content? 'Delete'
     end
 
     it 'add a user' do
-      visit '/admin/users'
+      visit admin_user_path
       fill_in 'user[email]', :with => 'c@e.com'
       check "#{@group.id}"
       click_button 'Create'
 
       page.has_content? 'c@e.com'
     end
-
-
-    #it 'create new lesson' do
-    #  visit '/admin/new-lesson'
-    #  fill_in 'lesson[title]', :with => @title
-    #  fill_in 'lesson[slug]', :with => @slug
-    #  fill_in 'lesson[video_title]', :with => @video
-    #  fill_in 'lesson[poster_name]', :with => @poster
-    #  fill_in 'lesson[body]', :with => @body
-
-    #  click_button 'Create'
-    #  current_path.should eq("/lessons/#{@slug}")
-    #  page.has_content? @title
-    #  page.has_content? @body
-    #end
-
-    #it 'edit a lesson' do
-    #  id = MoxieApp::Lesson.first(:slug => @slug).id
-    #  visit "/admin/lessons/#{id}/edit"
-    #  fill_in 'lesson[title]', :with => 'This has changed'
-    #  click_button 'Update'
-    #  visit "/lessons/#{@slug}"
-
-    #  page.has_content? 'This has changed'
-    #end
-
-    #it 'destroy a lesson' do
-    #  visit '/admin/new-lesson'
-    #  fill_in 'lesson[title]', :with => 'T'
-    #  fill_in 'lesson[slug]', :with => 'destroyed'
-    #  fill_in 'lesson[video_title]', :with => @video
-    #  fill_in 'lesson[poster_name]', :with => @poster
-    #  fill_in 'lesson[body]', :with => @body
-    #  click_button 'Create'
-
-    #  lesson = MoxieApp::Lesson.first(:slug => 'destroyed')
-    #  visit '/admin/lessons'
-    #  click_link "destroy-#{lesson.id}"
-
-    #  visit "/lessons/destroyed"
-    #  current_path.should eq('/')
-    #end 
-
-
   end
 
 

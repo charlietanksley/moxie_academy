@@ -1,8 +1,6 @@
 require 'rspec'
 require 'rack/test'
 
-require 
-
 # Sinatra testing stuff
 require File.join(File.dirname(__FILE__), '..', 'moxie.rb')
 require 'sinatra'
@@ -53,7 +51,6 @@ def admin_lesson_path
   '/admin/lessons'
 end
 
-def create_new(model, opts={})
-  m = ['MoxieApp', model].join('::').constantize
-  m.create(opts)
+def admin_user_path
+  '/admin/users'
 end
