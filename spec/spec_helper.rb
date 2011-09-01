@@ -1,6 +1,8 @@
 require 'rspec'
 require 'rack/test'
 
+require 
+
 # Sinatra testing stuff
 require File.join(File.dirname(__FILE__), '..', 'moxie.rb')
 require 'sinatra'
@@ -33,4 +35,25 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
+end
+
+def create_test_user
+  MoxieApp::Group.create(:name => 'Test', :password => 'password')
+end
+
+def admin_login_path
+  '/admin/login'
+end
+
+def new_lesson_path
+  '/admin/new-lesson'
+end
+
+def admin_lesson_path
+  '/admin/lessons'
+end
+
+def create_new(model, opts={})
+  m = ['MoxieApp', model].join('::').constantize
+  m.create(opts)
 end

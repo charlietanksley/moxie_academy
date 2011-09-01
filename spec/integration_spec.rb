@@ -44,11 +44,11 @@ end
 
 describe 'Within the admin section,', :type => :request do
   before(:all) do
-    MoxieApp::Group.create(:name => 'Test', :password => 'password')
+    create_test_user
   end
 
   before(:each) do
-    visit '/admin/login'
+    visit admin_login_path
     fill_in 'login[name]', :with => 'admin'
     fill_in 'login[password]', :with => 'password'
     click_button 'Sign In'
@@ -68,14 +68,14 @@ describe 'Within the admin section,', :type => :request do
     end
 
     it 'view all lessons' do
-      visit '/admin/lessons'
+      visit admin_lesson_path
       page.has_xpath?('//table/tr')
       page.has_content? 'Edit'
       page.has_content? 'Delete'
     end
 
     it 'create new lesson' do
-      visit '/admin/new-lesson'
+      visit new_lesson_path
       fill_in 'lesson[title]', :with => @title
       fill_in 'lesson[slug]', :with => @slug
       fill_in 'lesson[video_title]', :with => @video
@@ -89,7 +89,8 @@ describe 'Within the admin section,', :type => :request do
     end
 
     it 'edit a lesson' do
-      i = MoxieApp::Lesson.create(:title => 'whatever', :slug => @slug, :video_title => 'sure')
+      #i = MoxieApp::Lesson.create(:title => 'whatever', :slug => @slug, :video_title => 'sure')
+      i = create_new('Lesson', {:title => 'whatever', :slug => @slug, :video_title => 'sure'})
       visit "/admin/lessons/#{i.id}/edit"
       fill_in 'lesson[title]', :with => 'This has changed'
       click_button 'Update'
