@@ -3,7 +3,7 @@
     a href="/lessons/#{@lesson.slug}" = @lesson.title
   p #{{@lesson.body}}
   .video-js-box
-    video poster="#{@lesson.poster_name}" width="320" height="200" controls preload
+    video(poster="#{@lesson.poster_name}" width="320" height="200" controls preload)
       source src="#{@lesson.video_title}.mp4"
       source src="#{@lesson.video_title}.ogv"
     //Using the Video for Everybody Embed Code http://camendesign.com/code/video_for_everybody
