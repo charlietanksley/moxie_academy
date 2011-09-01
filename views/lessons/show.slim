@@ -3,9 +3,9 @@
     a href="/lessons/#{@lesson.slug}" = @lesson.title
   p #{{@lesson.body}}
   .video-js-box
-    video(poster="#{@lesson.poster_name}" width="320" height="200" controls preload)
-      source src="#{@lesson.video_title}.mp4"
-      source src="#{@lesson.video_title}.ogv"
+    video(poster="http://www.joytanksley.com/resources/moxie/#{@lesson.poster_name}" width="320" height="200" controls preload)
+      source src="http://www.joytanksley.com/resources/moxie/#{@lesson.video_title}.mp4"
+      source src="http://www.joytanksley.com/resources/moxie/#{@lesson.video_title}.ogv"
     //Using the Video for Everybody Embed Code http://camendesign.com/code/video_for_everybody
     //video(class="video-js" width="320" height="240" controls preload poster="http://www.joytanksley.com/resources/moxie/#{@lesson.poster_name}")
     //  //source src="http://www.joytanksley.com/resources/moxie/#{@lesson.video_title}.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'
