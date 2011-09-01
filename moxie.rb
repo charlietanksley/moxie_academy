@@ -146,8 +146,6 @@ class MoxieApp < Sinatra::Base
     flash[:notice] = 'You have successfully logged out.'
     redirect to('/login')
   end
-
-  
   
   # END LOGOUT }}}
   # LESSONS {{{

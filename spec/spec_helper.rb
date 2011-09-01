@@ -39,6 +39,19 @@ def create_test_user
   MoxieApp::Group.create(:name => 'Test', :password => 'password')
 end
 
+def create_test_group
+  MoxieApp::Group.create(:name => 'Test', :password => 'password')
+end
+
+def create_test_user_with_password(group_id)
+  MoxieApp::User.create(:email => 'user@example.com', :group_id => group_id)
+end
+
+def create_test_lesson
+  MoxieApp::Lesson.create(:video_title => 'whatever', :slug => 'test')
+
+end
+
 def admin_login_path
   '/admin/login'
 end

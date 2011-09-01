@@ -14,19 +14,22 @@ describe 'If you are not logged in, you', :type => :request do
 
 end
 
-describe 'If you are logged in, you', :type => :request do
+describe 'If you are logged in,', :type => :request do
 
-  before(:each) do
-    MoxieApp::Group.create(:name => 'Test', :password => 'password')
-    MoxieApp::User.create(:email => 'user@example.com', :group_id => 1)
-    MoxieApp::Lesson.create(:video_title => 'whatever', :slug => 'test')
-    #visit '/login'
-    #fill_in 'login[email]', :with => 'user@example.com'
-    #fill_in 'login[password]', :with => 'password'
-    #click_button 'Sign In'
+  before(:all) do
+    i = create_test_group
+    create_test_user_with_password(i)
+    create_test_lesson
   end
 
-  pending 'can view the lessons overview page' do
+  before :each do
+    visit '/login'
+    fill_in 'login[email]', :with => 'user@example.com'
+    fill_in 'login[password]', :with => 'password'
+    click_button 'Sign In'
+  end
+
+  pending 'you can view the lessons overview page' do
     visit '/lessons'
     current_path.should eq('/lessons')
   end
