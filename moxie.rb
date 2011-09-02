@@ -9,7 +9,7 @@ require 'slim'
 
 class MoxieApp < Sinatra::Base
 
-  # DATAMAPPER {{{
+  # MODELS {{{
 
   DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/development.db")
 
@@ -55,7 +55,7 @@ class MoxieApp < Sinatra::Base
   DataMapper.finalize
   DataMapper.auto_upgrade!
 
-  # END DataMapper }}}
+  # END MODELS }}}
   # CONFIG {{{
 
   set :public, File.dirname(__FILE__) + '/public'
