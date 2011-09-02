@@ -15,7 +15,7 @@ set :run, false
 set :raise_errors, true
 set :logging, false
 
-
+ENV['ADMIN_PASSWORD'] = 'password'
 
 RSpec.configure do |config|
   config.include Rack::Test::Methods
