@@ -52,7 +52,7 @@ end
 
 describe 'Within the admin section,', :type => :request do
   before(:all) do
-    create_test_user
+    create_test_group
   end
 
   before(:each) do

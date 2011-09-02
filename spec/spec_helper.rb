@@ -35,10 +35,6 @@ RSpec.configure do |config|
 
 end
 
-def create_test_user
-  MoxieApp::Group.create(:name => 'Test', :password => 'password')
-end
-
 def create_test_group
   MoxieApp::Group.create(:name => 'Test', :password => 'password')
 end
@@ -49,7 +45,6 @@ end
 
 def create_test_lesson
   MoxieApp::Lesson.create(:title => 'Title', :video_title => 'whatever', :slug => 'test')
-
 end
 
 def admin_login_path
