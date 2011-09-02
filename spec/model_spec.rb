@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+# USER {{{
+
 describe MoxieApp::User, 'A new user' do
 
   pending 'creation fails without email'
@@ -10,6 +12,9 @@ describe MoxieApp::User, 'A new user' do
 
 end
 
+# END USER }}}
+# GROUP {{{
+
 describe MoxieApp::Group, 'A new group' do
 
   pending 'creation fails without a password'
@@ -19,6 +24,9 @@ describe MoxieApp::Group, 'A new group' do
   pending 'has many users' 
 
 end
+
+# END GROUP }}}
+# LESSON {{{
 
 describe MoxieApp::Lesson, 'A new lesson' do
 
@@ -31,3 +39,5 @@ describe MoxieApp::Lesson, 'A new lesson' do
   pending 'creation fails if the slug is not unique'
 
 end
+
+# END LESSON }}}
