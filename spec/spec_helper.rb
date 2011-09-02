@@ -10,6 +10,8 @@ require 'capybara/dsl'
 require 'database_cleaner'
 require 'factory_girl'
 
+require 'factories'
+
 Capybara.app = MoxieApp
 set :environment, :test
 set :run, false

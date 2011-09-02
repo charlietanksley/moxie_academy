@@ -5,8 +5,7 @@ require 'spec_helper'
 describe MoxieApp::User, 'A new user' do
 
   it 'creation fails without email' do
-    #Fabricator(:moxie_app_user).email.should == 'c'
-    user = build_stubbed(:user)
+    user = build(:user)
     user.email.should == 'c'
   end
 
