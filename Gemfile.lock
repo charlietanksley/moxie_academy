@@ -79,6 +79,7 @@ GEM
     do_sqlite3 (0.10.6)
       data_objects (= 0.10.6)
     eventmachine (0.12.10)
+    factory_girl (2.0.5)
     fastercsv (1.5.4)
     ffi (1.0.9)
     foreman (0.20.0)
@@ -153,6 +154,7 @@ DEPENDENCIES
   database_cleaner!
   dm-postgres-adapter
   dm-sqlite-adapter
+  factory_girl (~> 2.0.0)
   foreman
   rack-flash
   rspec

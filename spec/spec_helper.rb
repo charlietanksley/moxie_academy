@@ -8,6 +8,7 @@ require 'capybara'
 require 'capybara/rspec'
 require 'capybara/dsl'
 require 'database_cleaner'
+require 'factory_girl'
 
 Capybara.app = MoxieApp
 set :environment, :test
@@ -19,6 +20,7 @@ ENV['ADMIN_PASSWORD'] = 'password'
 
 RSpec.configure do |config|
   config.include Rack::Test::Methods
+  config.include Factory::Syntax::Methods
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :truncation

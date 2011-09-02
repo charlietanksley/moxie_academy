@@ -27,4 +27,6 @@ group :test do
   gem 'rspec'
   gem 'capybara'
   gem 'database_cleaner', :git => 'https://github.com/bmabey/database_cleaner.git'
+  #gem 'fabrication'
+  gem 'factory_girl', '~> 2.0.0'
 end
