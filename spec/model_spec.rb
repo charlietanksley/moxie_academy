@@ -4,10 +4,7 @@ require 'spec_helper'
 
 describe MoxieApp::User, 'A new user' do
 
-  it 'creation fails without email' do
-    user = build(:user)
-    user.email.should == 'c'
-  end
+  pending 'creation fails without email'
 
   pending 'creation fails without group_id'
 
