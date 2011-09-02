@@ -48,7 +48,7 @@ def create_test_user_with_password(group_id)
 end
 
 def create_test_lesson
-  MoxieApp::Lesson.create(:video_title => 'whatever', :slug => 'test')
+  MoxieApp::Lesson.create(:title => 'Title', :video_title => 'whatever', :slug => 'test')
 
 end
 

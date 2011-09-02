@@ -16,32 +16,37 @@ end
 
 describe 'If you are logged in,', :type => :request do
 
-  before(:all) do
-    i = create_test_group
-    create_test_user_with_password(i)
-    create_test_lesson
-  end
-
-  before :each do
+  before(:each) do
+    #i = MoxieApp::Group.create(:name => 'Test', :password => 'password')
+    #MoxieApp::User.create(:email => 'user@example.com', :group_id => i.id)
+    #MoxieApp::Lesson.create(:title => 'Title', :video_title => 'whatever', :slug => 'test')
+    @g = create_test_group
+    @u = create_test_user_with_password(@g.id)
+    @l = create_test_lesson
     visit '/login'
-    fill_in 'login[email]', :with => 'user@example.com'
-    fill_in 'login[password]', :with => 'password'
+    fill_in 'login[email]', :with => @u.email
+    fill_in 'login[password]', :with => @u.group.password
     click_button 'Sign In'
   end
 
-  pending 'you can view the lessons overview page' do
+  it 'you can view the lessons overview page' do
     visit '/lessons'
     current_path.should eq('/lessons')
   end
 
-  pending 'can view a specific lesson' do
+  it 'you can view a specific lesson' do
     visit '/lessons/test'
     current_path.should eq('/lessons/test')
   end
 
-  pending 'get redirected if the page does not exist' do
+  it 'you get redirected if the page does not exist' do
     visit '/lessons/does-not-exist'
     current_path.should eq('/')
+  end
+
+  it 'you can log out' do
+    visit '/logout'
+    current_path.should eq('/login')
   end
 end
 
