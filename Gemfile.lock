@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/bmabey/database_cleaner.git
+  revision: 7f477031e9c2f075efe2f2513ffc90522c334af1
+  specs:
+    database_cleaner (0.6.7)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -33,7 +39,6 @@ GEM
       dm-validations (= 1.1.0)
     data_objects (0.10.6)
       addressable (~> 2.1)
-    database_cleaner (0.6.7)
     diff-lcs (1.1.2)
     dm-aggregates (1.1.0)
       dm-core (~> 1.1.0)
@@ -145,7 +150,7 @@ DEPENDENCIES
   compass
   compass-susy-plugin
   data_mapper
-  database_cleaner
+  database_cleaner!
   dm-postgres-adapter
   dm-sqlite-adapter
   foreman
