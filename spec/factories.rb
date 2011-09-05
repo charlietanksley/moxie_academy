@@ -3,6 +3,7 @@ Factory.define :group, :class => MoxieApp::Group do |t|
   t.password 'password'
 end
 
+# http://www.snowblink.co.uk/archives/2009/04/24/factory-girl-and-has-many-through
 Factory.define :user, :class => MoxieApp::User do |t|
   t.sequence(:email) { |n| "email#{n}@factory.com" }
   t.group_id { |a| a.association(:group).id }

@@ -4,9 +4,20 @@ require 'spec_helper'
 
 describe MoxieApp::User, 'A new user' do
 
-  pending 'creation fails without email'
+  it 'succeeds if all the parts are in place' do
+    user = build :user
+    user.should be_valid
+  end
 
-  pending 'creation fails without group_id'
+  it 'creation fails without email' do
+    user = build(:user, :email => '')
+    user.should_not be_valid
+  end
+
+  it 'creation fails without group_id' do
+    user = build(:user, :group_id => '')
+    user.should_not be_valid
+  end
 
   pending 'belongs to a group'
 
@@ -17,9 +28,21 @@ end
 
 describe MoxieApp::Group, 'A new group' do
 
-  pending 'creation fails without a password'
+  it 'succeeds if all the parts are in place' do
+    group = build :group
+    group.should be_valid
+  end
 
-  pending 'creation fails if the password is not unique'
+  it 'creation fails without a password' do
+    group = build :group, :password => ''
+    group.should_not be_valid
+  end
+
+  it 'creation fails if the password is not unique' do
+    g1 = create :group
+    group = build :group, :password => g1.password
+    group.should_not be_valid
+  end
 
   pending 'has many users' 
 
@@ -30,13 +53,34 @@ end
 
 describe MoxieApp::Lesson, 'A new lesson' do
 
-  pending 'creation fails without a video title'
+  it 'succeeds if all the parts are in place' do
+    lesson = build :lesson
+    lesson.should be_valid
+  end
 
-  pending 'creation fails without a slug'
+  it 'creation fails without a video title' do
+    lesson = build :lesson, :video_title => ''
+    lesson.should_not be_valid
+  end
 
-  pending 'creation fails if the slug has spaces or non-safe characters'
+  it 'creation fails without a slug' do
+    lesson = build :lesson, :slug => ''
+    lesson.should_not be_valid
+  end
 
-  pending 'creation fails if the slug is not unique'
+  it 'creation fails if the slug has spaces or non-safe characters' do
+    lesson = build :lesson, :slug => 'this slug'
+    lesson.should_not be_valid
+
+    lesson = build :lesson, :slug => 'this!slug'
+    lesson.should_not be_valid
+  end
+
+  it 'creation fails if the slug is not unique' do
+    l1 = create :lesson
+    lesson = build :lesson, :slug => l1.slug 
+    lesson.should_not be_valid
+  end
 
 end
 
