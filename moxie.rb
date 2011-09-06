@@ -42,7 +42,7 @@ class MoxieApp < Sinatra::Base
 
     property :id,           Serial
     property :title,        String
-    property :slug,         String, :key => true
+    property :slug,         String, :key => true, :format => /^[-_a-zA-Z0-9]+$/
     property :body,         Text
     property :video_title,  String
     property :poster_name,  String
