@@ -14,10 +14,37 @@ describe 'If you are not logged in, you', :type => :request do
 
 end
 
+describe 'Failed attempts to log in:', :type => :request do
+  before :each do
+    @g = create_test_group
+    @u = create_test_user_with_password @g.id
+    @l = create_test_lesson
+  end
+
+  it 'redirects you to the login page if you enter the password incorrectly' do
+    visit '/login'
+    fill_in 'login[email]', :with => @u.email
+    fill_in 'login[password]', :with => 'bad_password'
+    click_button 'Sign In'
+    current_path.should eq('/login')
+  end
+
+  it 'redirects you to the login page if you enter the password incorrectly' do
+    visit '/login'
+    fill_in 'login[email]', :with => 'something@random.com'
+    fill_in 'login[password]', :with => @u.group.password
+    click_button 'Sign In'
+    current_path.should eq('/login')
+  end
+
+end
+
 describe 'If you are logged in,', :type => :request do
 
   before(:each) do
     #i = MoxieApp::Group.create(:name => 'Test', :password => 'password')
+    ##i
+    #:q
     #MoxieApp::User.create(:email => 'user@example.com', :group_id => i.id)
     #MoxieApp::Lesson.create(:title => 'Title', :video_title => 'whatever', :slug => 'test')
     @g = create_test_group
