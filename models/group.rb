@@ -5,4 +5,8 @@ class Group
   property :id, Serial
   property :name, String
   property :password, String
+
+  has n, :users
+  validates_uniqueness_of :name
+  validates_presence_of   :password 
 end
