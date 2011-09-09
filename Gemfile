@@ -1,7 +1,7 @@
 source :rubygems
 
 # Server requirements
-# gem 'thin' or mongrel
+gem 'thin'
 
 # Project requirements
 gem 'rake'
@@ -9,8 +9,9 @@ gem 'rack-flash'
 
 # Component requirements
 gem 'compass'
+gem 'compass-susy-plugin'
 gem 'slim'
-gem 'dm-sqlite-adapter'
+gem 'dm-postgres-adapter'
 gem 'dm-validations'
 gem 'dm-timestamps'
 gem 'dm-migrations'
@@ -19,8 +20,18 @@ gem 'dm-aggregates'
 gem 'dm-core'
 
 # Test requirements
-gem 'rspec', :group => "test"
-gem 'rack-test', :require => "rack/test", :group => "test"
+group :test do
+  gem 'rspec'
+  gem 'rack-test', :require => "rack/test"
+  gem 'factory_girl'
+  gem 'capybara'
+  gem 'database_cleaner', :git => 'https://github.com/bmabey/database_cleaner.git'
+end
+
+group :development do
+  gem 'dm-sqlite-adapter'
+  gem 'tux'
+end
 
 
 # Padrino
