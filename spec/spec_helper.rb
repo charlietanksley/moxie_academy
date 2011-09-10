@@ -1,21 +1,19 @@
 PADRINO_ENV = 'test' unless defined?(PADRINO_ENV)
 require File.expand_path(File.dirname(__FILE__) + "/../config/boot")
 
+# Database Cleaner
+require 'database_cleaner'
+
+# Capybara
 require 'capybara'
 require 'capybara/rspec'
 require 'capybara/dsl'
-require 'database_cleaner'
-require 'factory_girl'
+Capybara.app = Padrino.application
 
+# Factory Girl
+require 'factory_girl'
 require 'factories'
 
-Capybara.app = MoxieAcademy
-#set :environment, :test
-#set :run, false
-#set :raise_errors, true
-#set :logging, false
-
-ENV['ADMIN_PASSWORD'] = 'password'
 
 RSpec.configure do |config|
   config.include Rack::Test::Methods
@@ -41,3 +39,25 @@ def app
   #   Padrino.application
   MoxieAcademy.tap { |app|  }
 end
+
+ENV['ADMIN_PASSWORD'] = 'password'
+
+class TestHelper
+
+  def self.create_test_group
+    Group.create(:name => 'Test', :password => 'password')
+  end
+
+  def self.create_test_user_with_password(group_id)
+    User.create(:email => 'user@example.com', :group_id => group_id)
+  end
+
+  def self.create_test_lesson
+    Lesson.create(:title => 'Title', :video_title => 'whatever', :slug => 'test')
+  end
+
+end
+
+__END__
+For Spork/Guard:
+https://gist.github.com/903600

@@ -19,7 +19,7 @@ MoxieAcademy.controllers :users do
   # end
 
   get :index do
-    'index'
+    "#{url_for(:users, :new)}"
   end
 
   get :new do

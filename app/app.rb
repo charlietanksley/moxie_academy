@@ -46,6 +46,12 @@ class MoxieAcademy < Padrino::Application
   #     disable :asset_stamp # no asset timestamping for dev
   #   end
   #
+  configure :test do
+    set :environment, :test
+    set :run, false
+    set :raise_errors, true
+    set :logging, false
+  end
 
   ##
   # You can manage errors like:
