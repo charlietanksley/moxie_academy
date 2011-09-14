@@ -97,7 +97,7 @@ class MoxieApp < Sinatra::Base
     end
 
     def no_header?
-      ['/', '/login', '/admin/login'].include?(request.path_info) ? true : false
+      ['/', '/login', '/about', '/admin/login'].include?(request.path_info) ? true : false
     end
 
   end
@@ -114,6 +114,13 @@ class MoxieApp < Sinatra::Base
   end
 
   # END INDEX }}}
+  # SALES PAGE {{{
+  
+  get '/about' do
+    slim :about
+  end
+
+  # END SALES PAGE }}}
   # LOG IN {{{
 
   get '/login' do
