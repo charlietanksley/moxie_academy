@@ -69,6 +69,32 @@ ul.plain
     @include full
 
 // END INDEX }}}
+// ABOUT/SALES {{{
+
+#about
+  .main
+    @include columns(7,12)
+    @include prefix(4,12)
+    @include suffix(1,12)
+  ul
+    list-style-type: square
+  span.call-to-action
+    +sans-font
+    color: $red1
+  .aside
+    +adjust-font-size-to(12.007px, 0.8)
+    padding: 0 1em 0 2em
+  //.testimonial
+    margin-left: -columns(2,2)
+    border-right: 1px solid black
+    //margin= 0 side_gutter() + columns(2) + gutter() 
+    //@include columns(7,7)
+    //float: left
+    //margin-left: 0
+    //width: 50%
+    
+
+// END ABOUT/SALES }}}
 // LESSONS {{{
 
 .lesson

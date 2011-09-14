@@ -115,7 +115,7 @@ class MoxieApp < Sinatra::Base
 
   # END INDEX }}}
   # SALES PAGE {{{
-  
+
   get '/about' do
     slim :about
   end
