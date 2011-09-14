@@ -1,0 +1,10 @@
+- @lessons.each do |l|
+  .lesson
+    h2
+      a href="/lessons/#{l.slug}" = l.title
+    p #{{l.body}}
+    .video-js-box
+    //video(poster="http://www.joytanksley.com/resources/moxie/#{l.poster_name}" width="320" height="200" controls preload)
+    video(width="320" height="200" controls preload)
+      source src="http://www.joytanksley.com/resources/moxie/#{l.video_title}.mp4"
+      source src="http://www.joytanksley.com/resources/moxie/#{l.video_title}.ogv"

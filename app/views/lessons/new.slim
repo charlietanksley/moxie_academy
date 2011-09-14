@@ -1,0 +1,43 @@
+.lesson-row
+  .sample-lesson
+    h2 Sample lesson
+    p The following:
+    ul
+      li Title: Welcome
+      li Slug: welcome
+      li Video: welcome_video
+      li Poster: welcome_video.jpg
+      li Body: A paragraph if you like to explain what is going on.
+    p Will produce a page that has the title 'Welcome', the address http://www.moxieacademy.com/lessons/welcome, will play the video at http://www.joytanksley.com/resources/moxie/welcome_video.mp4, with the starting image/poster at http://www.joytanksley.com/resources/moxie/welcome_video.jpg, and the body above.
+
+  .new-lesson
+    h1 Create a lesson
+
+    form action='/admin/new-lesson' method='POST'
+      p
+        ' Title
+        span.small (this is what the lesson is called)
+        ' :
+      input type='text' name='lesson[title]' label='Title'
+      p
+        ' Slug
+        span.small (the url; no spaces, all lowercase, e.g., 'lesson-one')
+        ' :
+      input type='text' name='lesson[slug]' label='Slug'
+      p
+        ' Name of Video
+        span.small (no filetype, e.g., 'video1')
+        ' :
+      input type='text' name='lesson[video_title]' label='Name of Video'
+      p
+        ' Name of Poster
+        span.small (do include file type, e.g., 'video1.jpg')
+        ' :
+      input type='text' name='lesson[poster_name]' label='Name of Poster'
+      p
+        ' Text
+        span.small (any content you want to show up above the video; just text!)
+        ' :
+      textarea rows=10 cols=40 name='lesson[body]' label='Lesson Body'
+      br
+      input.submit type='submit' value='Create'

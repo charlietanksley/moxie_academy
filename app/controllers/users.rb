@@ -18,6 +18,9 @@ MoxieAcademy.controllers :users do
   #   "Hello world!"
   # end
 
+  get '/login' do
+  end
+
   get :index do
     "#{url_for(:users, :new)}"
   end

@@ -18,5 +18,26 @@ MoxieAcademy.controllers :lessons do
   #   "Hello world!"
   # end
 
+  # INDEX
+  get :index do
+  end
+
+  # INDIVIDUAL
+  get :show, :with => :slug do
+  end
+
+  # NEW
+  get :new do
+  end
+
+  post :new do
+  end
+
+  # EDIT
+  get :edit do
+  end
+
+  post :edit do
+  end
   
 end
