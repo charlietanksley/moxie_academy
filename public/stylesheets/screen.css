@@ -273,7 +273,8 @@ html {
 body {
   font-size: 1.375em;
   line-height: 2.182em;
-  font-family: baskerville, palatino, "palatino linotype", georgia, serif; }
+  font-family: baskerville, palatino, "palatino linotype", georgia, serif;
+  color: #101010; }
 
 header, article, section, figure, aside, footer {
   display: block; }
@@ -358,6 +359,20 @@ ul.plain {
   font-size: 0.75em;
   line-height: 1.599em;
   padding: 0 1em 0 2em; }
+#about .testimonial, #about .testimonial-paragraph {
+  font-size: 1.214em;
+  line-height: 1.235em;
+  color: #3a3b3b;
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+  padding-right: 0.5em;
+  padding-left: 0.5em;
+  float: left;
+  border-right: 2px solid #dd3d71;
+  margin-left: -66%;
+  width: 50%; }
+#about .testimonial-paragraph {
+  margin-left: -58%;
+  width: 48%; }
 
 .lesson {
   display: inline;
