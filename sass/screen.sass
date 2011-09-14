@@ -11,6 +11,7 @@ html
 body
   +adjust-font-size-to(22px)
   +serif-font
+  color: #101010
 
 header, article, section, figure, aside, footer
   display: block
@@ -84,14 +85,21 @@ ul.plain
   .aside
     +adjust-font-size-to(12.007px, 0.8)
     padding: 0 1em 0 2em
-  //.testimonial
-    margin-left: -columns(2,2)
-    border-right: 1px solid black
+  .testimonial
+    +adjust-font-size-to(19.428px)
+    color: #3a3b3b
+    +sans-font
+    padding-right: 0.5em
+    padding-left: 0.5em
+    float: left
+    border-right: 2px solid $red1
+    margin-left: -66%
+    width: 50%
+  .testimonial-paragraph
+    @extend .testimonial
+    margin-left: -58%
+    width: 48%
     //margin= 0 side_gutter() + columns(2) + gutter() 
-    //@include columns(7,7)
-    //float: left
-    //margin-left: 0
-    //width: 50%
     
 
 // END ABOUT/SALES }}}
