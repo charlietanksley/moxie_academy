@@ -123,6 +123,11 @@ class MoxieApp < Sinatra::Base
   post '/login' do
     credentials = params[:login]
     user = MoxieApp::User.first(:email => credentials[:email])
+
+    if user.nil?
+      flash[:error] = 'I think you entered your email address incorrectly.'
+      redirect to('/login')
+    end
           
     if user.group.password == credentials[:password]
       session[:logged_in_as] = user.group_id
@@ -130,7 +135,7 @@ class MoxieApp < Sinatra::Base
       if session[:back]
         redirect to(session[:back])
       end
-      redirect to('/')
+      redirect to('/lessons')
     else
       flash[:error] = 'There seems to have been a problem.  Please enter your email and password again.'
       redirect to('/login')
