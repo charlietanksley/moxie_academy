@@ -1,11 +1,13 @@
 .block
-  h3 Simple Block
-  .content
-    p
-      ' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      | Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  h3 Lessons
+  /.content
+    ul.admin-list
+      - @lessons.each do |l|
+         li #{{link_to l.title, MoxieAcademy.url_for(:lessons, :edit, :id => l.id)}}
+
 .block
-  h3 Links
-  ul.navigation
-    li==link_to "Link 1"
-    li==link_to "Link 2"
+  h3 Groups
+  .content
+    /ul.admin-list
+      - @groups.each do |g|
+         li #{{link_to g.name, MoxieAcademy.url_for(:groups, :edit, :id => g.id)}}
