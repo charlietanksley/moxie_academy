@@ -9,7 +9,7 @@ require 'slim'
 
 class MoxieApp < Sinatra::Base
 
-  # DATAMAPPER {{{
+  # MODELS {{{
 
   DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/development.db")
 
@@ -42,7 +42,7 @@ class MoxieApp < Sinatra::Base
 
     property :id,           Serial
     property :title,        String
-    property :slug,         String, :key => true
+    property :slug,         String, :format => /^[-_a-zA-Z0-9]+$/
     property :body,         Text
     property :video_title,  String
     property :poster_name,  String
@@ -55,7 +55,7 @@ class MoxieApp < Sinatra::Base
   DataMapper.finalize
   DataMapper.auto_upgrade!
 
-  # END DataMapper }}}
+  # END MODELS }}}
   # CONFIG {{{
 
   set :public, File.dirname(__FILE__) + '/public'
@@ -97,7 +97,7 @@ class MoxieApp < Sinatra::Base
     end
 
     def no_header?
-      ['/', '/login', '/admin/login'].include?(request.path_info) ? true : false
+      ['/', '/login', '/about', '/admin/login'].include?(request.path_info) ? true : false
     end
 
   end
@@ -114,6 +114,13 @@ class MoxieApp < Sinatra::Base
   end
 
   # END INDEX }}}
+  # SALES PAGE {{{
+
+  get '/about' do
+    slim :about
+  end
+
+  # END SALES PAGE }}}
   # LOG IN {{{
 
   get '/login' do
@@ -123,6 +130,11 @@ class MoxieApp < Sinatra::Base
   post '/login' do
     credentials = params[:login]
     user = MoxieApp::User.first(:email => credentials[:email])
+
+    if user.nil?
+      flash[:error] = 'I think you entered your email address incorrectly.'
+      redirect to('/login')
+    end
           
     if user.group.password == credentials[:password]
       session[:logged_in_as] = user.group_id
@@ -130,7 +142,7 @@ class MoxieApp < Sinatra::Base
       if session[:back]
         redirect to(session[:back])
       end
-      redirect to('/')
+      redirect to('/lessons')
     else
       flash[:error] = 'There seems to have been a problem.  Please enter your email and password again.'
       redirect to('/login')
@@ -146,8 +158,6 @@ class MoxieApp < Sinatra::Base
     flash[:notice] = 'You have successfully logged out.'
     redirect to('/login')
   end
-
-  
   
   # END LOGOUT }}}
   # LESSONS {{{
@@ -160,8 +170,12 @@ class MoxieApp < Sinatra::Base
 
   get '/lessons/:slug' do
     authenticate_logged_in
-    @lesson = Lesson.first(:slug => params[:slug])
-    slim :'lessons/show'
+    begin
+      @lesson = Lesson.first(:slug => params[:slug])
+      slim :'lessons/show'
+    rescue
+      not_found
+    end
   end
 
   # END LESSONS }}}
@@ -335,6 +349,13 @@ class MoxieApp < Sinatra::Base
   # END ADMIN GROUP TASKS }}}
   
   # END ADMIN }}}
+  # ERRORS {{{
+
+  not_found do
+    redirect to('/')
+  end
+
+  # END ERRORS }}}
 
   # END ROUTES }}}
 end
