@@ -18,25 +18,96 @@ MoxieAcademy.controllers :users do
   #   "Hello world!"
   # end
 
+  # LOGIN {{{
+
   get '/login' do
+    render 'users/login'
   end
+
+  post '/login' do
+    credentials = params[:login]
+    user = User.first(:email => credentials[:email])
+          
+    if user.group.password == credentials[:password]
+      session[:logged_in_as] = user.group_id
+      session[:logged_in] = true
+      if session[:back]
+        redirect to(session[:back])
+      end
+      redirect to('/')
+    else
+      flash[:error] = 'There seems to have been a problem.  Please enter your email and password again.'
+      redirect to('/login')
+    end
+  end
+
+  # END LOGIN }}}
+  # INDEX {{{
 
   get :index do
-    "#{url_for(:users, :new)}"
+    @users = User.all
+    @groups = Group.all
+    render 'admin/users'
   end
 
+  # INDEX }}}
+  # SHOW {{{
+  
+  get :show, :with => :id do
+    @user = User.first(params[:id])
+    render 'users/show'
+  end
+  
+  # END SHOW }}}
+  # NEW {{{
+
   get :new do
-    'new'
+    render 'users/new'
   end
 
   post :new do
+    credentials = params[:user]
+    user = User.new(credentials)
+    if user.save
+      flash[:notice] = 'Success!'
+      redirect to('/admin/users')
+    else
+      flash[:error] = 'Something went wrong :('
+      redirect to('/admin/users')
+    end
   end
 
+  # END NEW }}}
+  # EDIT {{{
+
   get :edit do
-    'edit'
+    @user = User.first(:id => params[:id])
+    @groups = Group.all
+    render 'admin/edit-user'
   end
 
   post :edit do
+    credentials = remove_empty_fields(params[:user])
+    user = User.first(:id => credentials['id'])
+    if user.update credentials
+      flash[:notice] = 'Success!'
+      redirect to('/admin/users')
+    else
+      flash[:error] = 'Something went wrong :('
+      redirect to('/admin/users')
+    end
   end
+  
+  # END EDIT }}}
+  # DESTROY {{{
+
+  get :destroy do
+    user = User.first(:id => params[:id])
+    flash[:notice] = "The account for #{user.email} has been removed"
+    user.destroy
+    redirect to('/admin/users')
+  end
+
+  # END DESTROY }}}
 
 end
