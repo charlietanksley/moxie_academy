@@ -8,6 +8,7 @@ gem 'rake'
 gem 'rack-flash'
 
 # Component requirements
+gem 'bcrypt-ruby', :require => "bcrypt"
 gem 'compass'
 gem 'compass-susy-plugin'
 gem 'slim'

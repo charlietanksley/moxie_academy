@@ -9,6 +9,7 @@ GEM
   specs:
     activesupport (3.0.10)
     addressable (2.2.6)
+    bcrypt-ruby (2.1.4)
     bond (0.4.1)
     capybara (1.1.1)
       mime-types (>= 1.16)
@@ -166,6 +167,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt-ruby
   capybara
   compass
   compass-susy-plugin
