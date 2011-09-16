@@ -18,13 +18,15 @@ MoxieAcademy.controllers :lessons do
   #   "Hello world!"
   # end
 
-  # INDEX
+  # INDEX {{{
   get :index do
     @lessons = Lesson.all
     render 'lessons/index'
   end
 
-  # NEW
+  # END INDEX }}}
+  # NEW {{{
+
   get :new do
     render 'lessons/new'
   end
@@ -40,7 +42,9 @@ MoxieAcademy.controllers :lessons do
     end
   end
 
-  # EDIT
+  # END NEW }}}
+  # EDIT {{{
+
   get :edit do
     @lesson = Lesson.first(:id => params[:id])
     render 'lessons/edit'
@@ -57,14 +61,20 @@ MoxieAcademy.controllers :lessons do
     end
   end
 
+  # END EDIT }}}
+  # DESTROY {{{
+
   get :destroy do
     lesson = Lesson.first(:id => params[:id])
     flash[:notice] = "The lesson '#{lesson.title}' has been removed"
     lesson.destroy
     redirect to('/admin/lessons')
   end
-  
-  # INDIVIDUAL (has to be last or it will gobble up all lesson paths!)
+
+  # END DESTROY }}}
+  # SHOW {{{
+  # (has to be last or it will gobble up all lesson paths!)
+
   get :show, :map => 'lessons/:slug' do
     begin
       @lesson = Lesson.first(:slug => params[:slug])
@@ -73,5 +83,7 @@ MoxieAcademy.controllers :lessons do
       lesson_not_found
     end
   end
+
+  # END SHOW }}}
 
 end
