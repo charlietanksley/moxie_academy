@@ -5,6 +5,54 @@ Admin.controllers :lessons do
     render 'lessons/index'
   end
 
+  # NEW {{{
+
+  get :new do
+    render 'lessons/new'
+  end
+
+  post :create do
+    lesson = Lesson.new(params[:lesson])
+    if lesson.save!
+      @lesson = lesson
+      redirect ("/lessons/#{@lesson.slug}")
+    else
+      flash[:error] = "Sorry, something went wrong!"
+      redirect to('/lessons/')
+    end
+  end
+
+  # END NEW }}}
+  # EDIT {{{
+
+  get :edit do
+    @lesson = Lesson.first(:id => params[:id])
+    render 'lessons/edit'
+  end
+
+  post :edit do
+    lesson_info = remove_empty_fields(params[:lesson])
+    lesson = Lesson.first(:id => lesson_info['id'])
+    if lesson.update lesson_info
+      flash[:notice] = 'Success!'
+      redirect to('/admin/lessons')
+    else
+      flash[:error] = 'Something went wrong :('
+    end
+  end
+
+  # END EDIT }}}
+  # DESTROY {{{
+
+  get :destroy do
+    lesson = Lesson.first(:id => params[:id])
+    flash[:notice] = "The lesson '#{lesson.title}' has been removed"
+    lesson.destroy
+    redirect to('/admin/lessons')
+  end
+
+  # END DESTROY }}}
+
 
 end
 __END__
