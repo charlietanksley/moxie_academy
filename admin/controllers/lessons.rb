@@ -5,6 +5,11 @@ Admin.controllers :lessons do
     render 'lessons/index'
   end
 
+
+end
+__END__
+
+
   get :new do
     @account = Account.new
     render 'accounts/new'
