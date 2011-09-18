@@ -20,7 +20,7 @@ MoxieAcademy.controllers :lessons do
 
   # INDEX {{{
   get :index do
-    @lessons = Lesson.all
+    @lessons = Lesson.all(:order => [:id.desc])
     render 'lessons/index'
   end
 
