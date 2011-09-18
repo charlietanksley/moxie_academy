@@ -1,7 +1,5 @@
 MoxieAcademy.controllers :users do
 
-  # LOGIN {{{
-
   # get :index, :map => "/foo/bar" do
   get :new, :map => '/login' do
     render 'sessions/new'
@@ -30,7 +28,5 @@ MoxieAcademy.controllers :users do
 
     redirect url(:sessions, :new)
   end
-
-  # END LOGIN }}}
 
 end
