@@ -1,5 +1,5 @@
 require 'simplecov'
-SimpleCov.start
+#SimpleCov.start
 # SimpleCov.start 'rails'
 
 PADRINO_ENV = 'test' unless defined?(PADRINO_ENV)
