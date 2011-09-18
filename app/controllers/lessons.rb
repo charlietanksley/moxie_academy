@@ -33,7 +33,8 @@ MoxieAcademy.controllers :lessons do
       @lesson = Lesson.first(:slug => params[:slug])
       render 'lessons/show'
     rescue
-      lesson_not_found
+      flash[:error] = 'You must have a bad url; that lesson does not exist.'
+      redirect url(:lessons, :index)
     end
   end
 

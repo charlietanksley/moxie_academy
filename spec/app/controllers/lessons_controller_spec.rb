@@ -23,6 +23,19 @@ describe "LessonsController" do
   end
 
   describe 'An individual lesson page' do
+    it 'shows the right lesson' do
+      get "/lessons/#{@l.slug}"
 
+      last_response.body.should include(@l.title)
+      last_response.body.should include(@l.body)
+    end
+
+    it 'redirects properly when the lesson is not found' do
+      get '/lessons/does-not-exist-23419'
+
+      last_response.status.should == 302
+      last_response.location.should =~ /\/lessons$/
+      #last_response.
+    end
   end
 end
