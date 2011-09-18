@@ -1,30 +1,13 @@
 MoxieAcademy.controllers :users do
-  # get :index, :map => "/foo/bar" do
-  #   session[:foo] = "bar"
-  #   render 'index'
-  # end
-
-  # get :sample, :map => "/sample/url", :provides => [:any, :js] do
-  #   case content_type
-  #     when :js then ...
-  #     else ...
-  # end
-
-  # get :foo, :with => :id do
-  #   "Maps to url '/foo/#{params[:id]}'"
-  # end
-
-  # get "/example" do
-  #   "Hello world!"
-  # end
 
   # LOGIN {{{
 
-  get '/login' do
-    render 'users/login'
+  # get :index, :map => "/foo/bar" do
+  get :new, :map => '/login' do
+    render 'sessions/new'
   end
 
-  post '/login' do
+  post :create do
     credentials = params[:login]
     user = User.first(:email => credentials[:email])
           
@@ -34,11 +17,18 @@ MoxieAcademy.controllers :users do
       if session[:back]
         redirect to(session[:back])
       end
-      redirect to('/')
+      redirect url(:lessons, :index)
     else
       flash[:error] = 'There seems to have been a problem.  Please enter your email and password again.'
-      redirect to('/login')
+      redirect url(:sessions, :new)
     end
+  end
+
+  delete :destroy do
+    session[:logged_in_as] = nil
+    session[:logged_in] = nil
+
+    redirect url(:sessions, :new)
   end
 
   # END LOGIN }}}
