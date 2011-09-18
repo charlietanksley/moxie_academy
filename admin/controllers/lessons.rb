@@ -14,41 +14,42 @@ Admin.controllers :lessons do
   post :create do
     lesson = Lesson.new(params[:lesson])
     if lesson.save!
-      @lesson = lesson
-      redirect ("/lessons/#{@lesson.slug}")
+      flash[:notice] = 'Lesson created.'
+      redirect url(:lessons, :index)
     else
       flash[:error] = "Sorry, something went wrong!"
-      redirect to('/lessons/')
+      #redirect url(:lessons, :index)
+      #redirect to('/lessons/')
     end
   end
 
   # END NEW }}}
   # EDIT {{{
 
-  get :edit do
-    @lesson = Lesson.first(:id => params[:id])
+  get :edit, :with => :id do
+    #@lesson = Lesson.first(:id => params[:id])
+    @lesson = Lesson.first(params[:id])
     render 'lessons/edit'
   end
 
-  post :edit do
-    lesson_info = remove_empty_fields(params[:lesson])
-    lesson = Lesson.first(:id => lesson_info['id'])
-    if lesson.update lesson_info
-      flash[:notice] = 'Success!'
-      redirect to('/admin/lessons')
+  put :update, :with => :id do
+    @lesson = Lesson.first(params[:id])
+    if @lesson.update(params[:lesson])
+      flash[:notice] = 'Lesson was successfully updated.'
+      redirect url(:lessons, :edit, :id => @lesson.id)
     else
-      flash[:error] = 'Something went wrong :('
+      render 'lessons/edit'
     end
   end
 
   # END EDIT }}}
   # DESTROY {{{
 
-  get :destroy do
+  delete :destroy do
     lesson = Lesson.first(:id => params[:id])
     flash[:notice] = "The lesson '#{lesson.title}' has been removed"
     lesson.destroy
-    redirect to('/admin/lessons')
+    redirect url(:lessons, :index)
   end
 
   # END DESTROY }}}
