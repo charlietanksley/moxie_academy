@@ -44,8 +44,9 @@ describe UserServices::Authentication do
     end
 
     it 'takes a user as an argument and sets the session_id as their id' do
-      @user.set_as_current_user
-
+      session = Hash[]
+      UserServices::Authentication.set_as_current_user(session, @user)
+      session[:session_id].should == @user.id
     end
   end
 
