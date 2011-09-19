@@ -16,23 +16,23 @@ end
 describe UserServices::Authentication do
 
   describe '#logged_in?' do
-    it 'calls the current_user method' do
+    it 'calls the session_id method' do
       t = TestUser.new
-      t.should_receive(:current_user)#.with("password").and_return(true)
+      t.should_receive(:session_id)#.with("password").and_return(true)
       
       t.logged_in?
     end
 
-    it 'returns true if current_user is not nil' do
+    it 'returns true if session_id is not nil' do
       t = TestUser.new
-      t.stub!(:current_user) { Object.new }
+      t.stub!(:session_id) { Object.new }
       
       t.logged_in?.should be_true
     end
 
-    it 'returns false if current_user is nil' do
+    it 'returns false if session_id is nil' do
       t = TestUser.new
-      t.stub!(:current_user) { nil }
+      t.stub!(:session_id) { nil }
       
       t.logged_in?.should be_false
     end
