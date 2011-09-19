@@ -12,4 +12,10 @@ class Lesson
   validates_presence_of   :video_title
   validates_presence_of   :slug
   validates_uniqueness_of :slug
+
+  ### DOES NOT REALLY BELONG HERE
+  def body_as_html
+    markdown = MarkdownPresenter.new(body)
+    markdown.convert_to_html
+  end
 end

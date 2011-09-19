@@ -12,6 +12,7 @@ gem 'bcrypt-ruby', :require => "bcrypt"
 gem 'compass'
 gem 'compass-susy-plugin'
 gem 'slim'
+gem 'rdiscount'
 gem 'dm-postgres-adapter'
 gem 'dm-validations'
 gem 'dm-timestamps'

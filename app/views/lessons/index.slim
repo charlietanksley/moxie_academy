@@ -2,7 +2,7 @@
   .lesson
     h2
       a href="/lessons/#{l.slug}" = l.title
-    p #{{l.body}}
+    p #{{l.body_as_html}}
     .video-js-box
     //video(poster="http://www.joytanksley.com/resources/moxie/#{l.poster_name}" width="320" height="200" controls preload)
     video(width="320" height="200" controls preload)
