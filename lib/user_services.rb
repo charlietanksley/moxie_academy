@@ -2,30 +2,35 @@
 # padrino-admin-0.10.1/lib/padrino-admin/helpers/authentication_helpers.rb
 module UserServices
   module Authentication
+
+    attr_reader :current_user
     
     # Public: Tell whether the current user is logged in.
     #
     # Returns a Boolean.
     def logged_in?
-      !current_account.nil?
+      !current_user.nil?
     end
 
-    # Public: Set the current account instance variable.
+    # Public: Set or retrieve the current account instance variable.
     #
     # Returns the current account
-    def current_account
-      #@current_account ||= login_from_session
+    def current_user
+      #@current_user ||= login_from_session
     end
 
-    # Public: Set current account.
+    # Public: Set current user in the session.
     #
-    # account - an object (e.g., a User) that is to have the current
-    #           account (being set). (default: nil)
-    #
-    # Returns an account.
-    def set_current_account(account=nil)
+    # Returns a User.
+    def set_as_current_user
+
     end
 
+    # Private: Log in an user based on info in the session.
+    #
+    # Returns a User.
+    def login_from_session
+    end
 
 
 
