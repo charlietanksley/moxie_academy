@@ -22,7 +22,7 @@ class Admin < Padrino::Application
 
   set :login_page, "/admin/sessions/new"
 
-  enable :authentication
+  enable  :authentication
   enable  :sessions
   disable :store_location
 

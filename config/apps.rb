@@ -33,4 +33,5 @@ end
 # Mounts the core application for this project
 Padrino.mount("MoxieAcademy").to('/')
 
+# Admin
 Padrino.mount("Admin").to("/admin")

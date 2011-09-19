@@ -1,3 +1,6 @@
+# Once you have these things password protected, it looks like you can't
+# test them with Rack::Test::Methods.  Boo!
+
 __END__
 require 'spec_helper'
 
@@ -9,7 +12,9 @@ describe "LessonsController" do
 
   describe 'The lessons index page' do
     it 'shows all the lessons' do
-      get "/lessons"
+      #get Admin.url(:lessons, :index)
+      #get Admin.url(:lessons, :index)#"lessons"
+      #last_response.should == 'this'
       #last_response.body.should include('WTF')
       #last_response.body.should include(@l2.title)
     end
@@ -17,7 +22,7 @@ describe "LessonsController" do
 
   describe 'The new lesson page' do
     it 'does it' do
-      get "/lessons"
+      #get "/lessons"
       #last_response.body.should == ''
     end
 

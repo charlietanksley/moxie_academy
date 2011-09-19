@@ -1,22 +1,13 @@
-MoxieAcademy.controllers :lessons do
-  # get :index, :map => "/foo/bar" do
-  #   session[:foo] = "bar"
-  #   render 'index'
-  # end
+MoxieAcademy.controllers :lessons, :conditions => {:protect => true} do
 
-  # get :sample, :map => "/sample/url", :provides => [:any, :js] do
-  #   case content_type
-  #     when :js then ...
-  #     else ...
-  # end
-
-  # get :foo, :with => :id do
-  #   "Maps to url '/foo/#{params[:id]}'"
-  # end
-
-  # get "/example" do
-  #   "Hello world!"
-  # end
+  def self.protect(*args)
+    condition {
+      unless session[:logged_in] == true
+        flash[:error] = 'You must be logged in to access a lesson'
+        redirect url(:sessions, :new)
+      end
+    }
+  end
 
   # INDEX {{{
   get :index do

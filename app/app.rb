@@ -4,8 +4,25 @@ class MoxieAcademy < Padrino::Application
   register Padrino::Helpers
   register CompassInitializer
 
+  enable  :sessions
 
-  enable :sessions
+  ############################################################
+  # Protect with Padrino?
+  #register Padrino::Admin::AccessControl
+
+  #enable  :authentication
+  #disable :store_location
+
+  #access_control.roles_for :any do |role|
+  #  role.protect "/lessons"
+  #  role.allow "/sessions"
+  #end
+
+  #access_control.roles_for :users do |role|
+  #  role.allow :lessons
+  #end
+
+  ############################################################
 
   ##
   # Caching support

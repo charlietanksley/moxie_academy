@@ -13,10 +13,12 @@ MoxieAcademy.controllers :sessions do
     if user.group.password == credentials[:password]
       session[:logged_in_as] = user.group_id
       session[:logged_in] = true
-      if session[:back]
-        redirect to(session[:back])
-      end
-      redirect url(:lessons, :index)
+      "#{session}: why you no back?"
+      #if session[:back]
+      #  redirect session[:back]
+      #else
+      #  redirect url(:lessons, :index)
+      #end
     else
       flash[:error] = 'There seems to have been a problem.  Please enter your email and password again.'
       redirect url(:sessions, :new)

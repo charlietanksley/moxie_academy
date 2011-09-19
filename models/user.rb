@@ -5,6 +5,7 @@ class User
   property :id, Serial
   property :email, String
   property :group_id, Integer
+  property :password, String
 
   belongs_to :group
   validates_presence_of   :email

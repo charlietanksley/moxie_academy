@@ -8,7 +8,7 @@ describe "LessonsController" do
 
   describe 'The lessons index page' do
     it "prints out all the available lessons" do
-      get "/lessons"
+      get MoxieAcademy.url(:lessons, :index)#"/lessons"
       last_response.body.should include(@l.title)
       last_response.body.should include(@l2.title)
     end

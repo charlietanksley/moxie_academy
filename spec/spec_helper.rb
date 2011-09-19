@@ -40,8 +40,9 @@ end
 def app
   ##
   # You can handle all padrino applications using instead:
-  #   Padrino.application
-  MoxieAcademy.tap { |app|  }
+  Padrino.application#.tap { |app| app.set :environment, :test }
+  #MoxieAcademy.tap { |app| app.set :environment, :test }
+  #Admin.tap { |app| app.set :environment, :test }
 end
 
 ENV['ADMIN_PASSWORD'] = 'password'
