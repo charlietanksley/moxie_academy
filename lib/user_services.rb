@@ -26,7 +26,7 @@ module UserServices
     # user    - a User (the full object, as we query for the id)
     #
     # Returns nothing.
-    def self.set_as_current_user(storage='session', user=nil)
+    def self.set_as_current_user(user=nil)
       storage[:session_id] = user.id
     end
 

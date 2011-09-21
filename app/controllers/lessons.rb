@@ -1,13 +1,20 @@
-MoxieAcademy.controllers :lessons, :conditions => {:protect => true} do
+MoxieAcademy.controllers :lessons do#, :conditions => {:protect => true} do
+  include UserServices::Authentication
 
-  def self.protect(*args)
-    condition {
-      unless session[:logged_in] == true
-        flash[:error] = 'You must be logged in to access a lesson'
-        redirect url(:sessions, :new)
-      end
-    }
-  end
+  #before do
+  #  unless session[:uid]
+  #    redirect url(:sessions, :new)
+  #  end
+  #end
+
+  #def self.protect(*args)
+  #  condition {
+  #    unless session[:logged_in] == true
+  #      flash[:error] = 'You must be logged in to access a lesson'
+  #      redirect url(:sessions, :new)
+  #    end
+  #  }
+  #end
 
   # INDEX {{{
   get :index do
@@ -20,6 +27,9 @@ MoxieAcademy.controllers :lessons, :conditions => {:protect => true} do
   # (has to be last or it will gobble up all lesson paths!)
 
   get :show, :map => 'lessons/:slug' do
+    unless session[:uid]
+      redirect url(:sessions, :new)
+    end
     begin
       @lesson = Lesson.first(:slug => params[:slug])
       render 'lessons/show'
