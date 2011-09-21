@@ -9,6 +9,8 @@ class Lesson
   property :video_title,  String
   property :poster_name,  String
 
+  has n, :groups, :through => Resource
+
   validates_presence_of   :video_title
   validates_presence_of   :slug
   validates_uniqueness_of :slug

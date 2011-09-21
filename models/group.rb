@@ -7,6 +7,8 @@ class Group
   property :password, String
 
   has n, :users
+  has n, :lessons, :through => Resource
+
   validates_uniqueness_of :name
   validates_presence_of   :password 
 end
