@@ -65,5 +65,4 @@ describe UserServices::Authentication do
     end
   end
 
-  
 end
