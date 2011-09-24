@@ -49,7 +49,8 @@ module UserServices
     #
     # Returns nothing.
     def verify_visible_to_user(user, resource)
-      redirect to(error 403) unless visible_to_user(user, resource)
+      #redirect to(error 403) unless visible_to_user(user, resource)
+      render 'not found' unless visible_to_user(user, resource)
     end
 
   end # Authentication

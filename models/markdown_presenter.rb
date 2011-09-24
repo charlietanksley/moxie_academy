@@ -1,7 +1,7 @@
 require 'rdiscount'
 class MarkdownPresenter
   def initialize(text)
-    @text = text
+    @text = text || ''
   end
   
   def convert_to_html

@@ -12,8 +12,9 @@ describe "LessonsController" do
       UserServices::Authentication.stub(:logged_in?).and_return(true)
 
       get MoxieAcademy.url(:lessons, :index)#"/lessons"
-      last_response.body.should include(@l.title)
-      last_response.body.should include(@l2.title)
+      last_response.should == ''
+      #last_response.should include(@l.title)
+      #last_response.body.should include(@l2.title)
     end
 
     pending 'shows all the videos in reverse order' do

@@ -2,7 +2,7 @@
   h2
     a href="/lessons/#{@lesson.slug}" = @lesson.title
   //p #{{@lesson.body}}
-  - body = MarkdownPresenter.new(@lesson.body)
+  /- body = MarkdownPresenter.new(@lesson.body)
   p #{{@lesson.body_as_html}}
   .video-js-box
     //video(poster="http://www.joytanksley.com/resources/moxie/#{@lesson.poster_name}" width="320" height="200" controls preload)

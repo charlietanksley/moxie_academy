@@ -18,7 +18,7 @@
           th=mat(:lesson, :video_title)
           th=mat(:lesson, :poster_name)
           th.last=="&nbsp;"
-        -@lessons.each do |lesson|
+        - @lessons.each do |lesson|
           tr
             td.first=lesson.id
             td=lesson.title

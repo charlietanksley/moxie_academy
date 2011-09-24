@@ -61,6 +61,14 @@ class TestHelper
     Lesson.create(:title => 'Title', :video_title => 'whatever', :slug => 'test')
   end
 
+  def self.create_test_lesson_with_group(user)
+    l = Lesson.create(:title => 'Title', :video_title => 'whatever', :slug => 'test')
+    l.groups << user.group
+    l.save
+
+    l
+  end
+
 end
 
 __END__
