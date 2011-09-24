@@ -29,7 +29,7 @@ group :test do
   gem 'capybara'
   gem 'database_cleaner', :git => 'https://github.com/bmabey/database_cleaner.git'
 end
-gem 'simplecov', '>= 0.4.0', :require => false, :group => :test
+#gem 'simplecov', '>= 0.4.0', :require => false, :group => :test
 
 group :development do
   gem 'dm-sqlite-adapter'
