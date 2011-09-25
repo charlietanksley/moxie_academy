@@ -17,13 +17,17 @@ MoxieAcademy.controllers :lessons do#, :conditions => {:protect => true} do
   get :show, :map => 'lessons/:slug' do
     begin
       @lesson = Lesson.first(:slug => params[:slug])
-      verify_visible_to_user?(User.first(:id => session[:uid]), @lesson)
+      if visible_to_user?(User.first(:id => session[:uid]), @lesson)
+        render 'lessons/show'
+      else
+        render 'not found'
+      end
+      #verify_visible_to_user?(User.first(:id => session[:uid]), @lesson)
     rescue
       flash[:error] = 'You must have a bad url; that lesson does not exist.'
       redirect url(:lessons, :index)
     end
 
-    render 'lessons/show'
   end
 
   # END SHOW }}}
