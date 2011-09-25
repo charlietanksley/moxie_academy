@@ -18,18 +18,18 @@
           th=mat(:lesson, :video_title)
           th=mat(:lesson, :poster_name)
           th.last=="&nbsp;"
-        - @lessons.each do |lesson|
+        - lessons.each do |less|
           tr
-            td.first=lesson.id
-            td=lesson.title
-            td=lesson.slug
-            td #{{truncate_words(lesson.body, :length => 10)}}
-            td=lesson.video_title
-            td=lesson.poster_name
+            td.first=less.id
+            td=less.title
+            td=less.slug
+            td #{{truncate_words(less.body, :length => 10)}}
+            td=less.video_title
+            td=less.poster_name
             td.last
-              ==button_to pat(:edit), url(:lessons, :edit, :id => lesson.id), :method => :get, :class => :button_to
+              ==button_to pat(:edit), url(:lessons, :edit, :id => less.id), :method => :get, :class => :button_to
               ==" | "
-              ==button_to pat(:delete), url(:lessons, :destroy, :id => lesson.id), :method => :delete, :class => :button_to, :onsubmit => "return confirm('#{pat(:confirm)}')"
+              ==button_to pat(:delete), url(:lessons, :destroy, :id => less.id), :method => :delete, :class => :button_to, :onsubmit => "return confirm('#{pat(:confirm)}')"
       .actions-bar.wat-cf
         .actions=="&nbsp;"
 

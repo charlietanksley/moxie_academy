@@ -1,7 +1,6 @@
 Admin.controllers :lessons do
 
   get :index do
-    @lessons = Lesson.all
     render 'lessons/index'
   end
 
@@ -54,4 +53,5 @@ Admin.controllers :lessons do
 
   # END DESTROY }}}
 
+  
 end
