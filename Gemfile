@@ -28,6 +28,8 @@ group :test do
   gem 'factory_girl'
   gem 'capybara'
   gem 'database_cleaner', :git => 'https://github.com/bmabey/database_cleaner.git'
+  gem 'rspec', :group => "test"
+  gem 'cucumber'
 end
 #gem 'simplecov', '>= 0.4.0', :require => false, :group => :test
 
