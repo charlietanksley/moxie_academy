@@ -52,9 +52,13 @@ describe 'If you are logged in,', :type => :request do
     click_on 'Sign In'
   end
 
-  it 'you can view the lessons overview page' do
+  it 'when you view the lessons overview page, you only see lessons available to you' do
+    l = create(:lesson)
     visit MoxieAcademy.url(:lessons, :index)
+
     current_path.should eq MoxieAcademy.url(:lessons, :index)
+    page.should have_content @l.title
+    page.should_not have_content l.title
   end
 
   it 'you can view a specific lesson if it is visible to you' do
@@ -80,4 +84,5 @@ describe 'If you are logged in,', :type => :request do
     visit '/sessions/logout'
     current_path.should eq MoxieAcademy.url(:sessions, :new)
   end
+
 end

@@ -53,5 +53,23 @@ module UserServices
       render 'not found' unless visible_to_user(user, resource)
     end
 
+    # Public: Return current User.
+    #
+    # Returns current User.
+    def current_user
+      User.first(:id => session[:uid])
+    end
+
+    # Public: Select elements from an array based on whether the User can view them.
+    #
+    # lessons - an array (e.g., of Lessons)
+    #
+    # Returns an array of whatever kind of objects it was given.
+    def select_visible(array)
+      user = current_user
+      array.select { |l| visible_to_user?(user, l) }
+    end
+
+
   end # Authentication
 end # UserServices
