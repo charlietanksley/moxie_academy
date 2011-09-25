@@ -10,7 +10,7 @@ Factory.define :user, :class => User do |t|
 end
 
 Factory.define :lesson, :class => Lesson do |t|
-  t.title 'Title'
+  t.sequence(:title) { |n| "Title #{n}" }
   t.sequence(:slug) { |n| "slug#{n}" }
   t.body 'This is just some text'
   t.video_title 'title'
