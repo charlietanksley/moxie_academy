@@ -20,9 +20,9 @@ MoxieAcademy.controllers :lessons do#, :conditions => {:protect => true} do
       if visible_to_user?(User.first(:id => session[:uid]), @lesson)
         render 'lessons/show'
       else
-        render 'not found'
+        flash[:error] = 'You must have a bad url; that lesson does not exist or is not available to you.'
+        redirect url(:lessons, :index)
       end
-      #verify_visible_to_user?(User.first(:id => session[:uid]), @lesson)
     rescue
       flash[:error] = 'You must have a bad url; that lesson does not exist.'
       redirect url(:lessons, :index)

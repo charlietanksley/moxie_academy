@@ -57,11 +57,19 @@ describe 'If you are logged in,', :type => :request do
     current_path.should eq MoxieAcademy.url(:lessons, :index)
   end
 
-  it 'you can view a specific lesson' do
+  it 'you can view a specific lesson if it is visible to you' do
     path = MoxieAcademy.url(:lessons, :show, :slug => @l.slug)
     visit path
     current_path.should eq path
   end
+
+  it 'you cannot view a specific lesson if it is not visible to you' do
+    l = create(:lesson)
+    
+    visit MoxieAcademy.url(:lessons, :show, :slug => l.slug)
+    current_path.should eq MoxieAcademy.url(:lessons, :index)
+  end
+
 
   it 'you get redirected if the page does not exist' do
     visit MoxieAcademy.url(:lessons, :show, :slug => 'this-does-not-exist')
