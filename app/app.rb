@@ -6,6 +6,14 @@ class MoxieAcademy < Padrino::Application
 
   enable  :sessions
 
+  get '/' do
+    render 'static/index'
+  end
+
+  get '/about' do
+    render 'static/about'
+  end
+
   ############################################################
   # Protect with Padrino?
   #register Padrino::Admin::AccessControl
