@@ -6,6 +6,8 @@ class MoxieAcademy < Padrino::Application
 
   enable  :sessions
 
+  layout :layout
+
   get '/' do
     render 'static/index'
   end

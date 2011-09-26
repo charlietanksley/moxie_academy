@@ -2,9 +2,10 @@ doctype html
 html lang="en"
   head
     meta charset="UTF-8"
-    title = @title
+    title = @title || 'Moxie Academy'
 
-    link href='/stylesheets/screen.css' media="screen, projection" rel="stylesheet" type="text/css"
+    == stylesheet_link_tag 'screen'
+    == favicon_tag 'images/favicon.png'
     script src="http://api.html5media.info/1.1.4/html5media.min.js"
     /[ if lt IE 9 ]
       script src="//html5shim.googlecode.com/svn/trunk/html5.js"
@@ -15,19 +16,6 @@ html lang="en"
       header id='header'
         hgroup
           img src='/images/moxie_logo.png' alt='Moxie Academy'
-
-      - unless no_header?
-        nav#nav
-          ul.nav
-            li
-              a href='/' Home
-            li
-              a href='/lessons' Lessons
-            li
-              a href='/logout' Logout
-
-
-
 
       - if flash[:notice]
         .notice
