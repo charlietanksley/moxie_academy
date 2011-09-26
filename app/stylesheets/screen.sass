@@ -69,6 +69,37 @@ ul.plain
     @include full
 
 // END INDEX }}}
+// ABOUT/SALES {{{
+
+#about
+  .main
+    @include columns(7,12)
+    @include prefix(4,12)
+    @include suffix(1,12)
+  ul
+    list-style-type: square
+  span.call-to-action
+    +sans-font
+    color: $red1
+  .aside
+    +adjust-font-size-to(12.007px, 0.8)
+    padding: 0 1em 0 2em
+  .testimonial
+    +adjust-font-size-to(19.428px)
+    color: #3a3b3b
+    +sans-font
+    padding-right: 0.5em
+    padding-left: 0.5em
+    float: left
+    border-right: 2px solid $red1
+    margin-left: -66%
+    width: 50%
+  .testimonial-paragraph
+    @extend .testimonial
+    margin-left: -58%
+    width: 48%
+
+// END ABOUT/SALES }}}
 // LESSONS {{{
 
 .lesson
