@@ -5,6 +5,8 @@ MoxieAcademy.controllers :lessons do#, :conditions => {:protect => true} do
     verify_logged_in
   end
 
+  layout :lessons_layout
+
   # INDEX {{{
   get :index do
     @lessons = select_visible(Lesson.all(:order => [:id.desc]))
