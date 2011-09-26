@@ -7,6 +7,7 @@ module CompassInitializer
     require 'sass/plugin/rack'
 
     Compass.configuration do |config|
+      require 'susy'
       config.project_path = Padrino.root
       config.sass_dir = "app/stylesheets"
       config.project_type = :stand_alone
