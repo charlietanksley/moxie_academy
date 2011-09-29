@@ -9,7 +9,7 @@ MoxieAcademy.controllers :lessons do#, :conditions => {:protect => true} do
 
   # INDEX {{{
   get :index do
-    @lessons = select_visible(Lesson.all(:order => [:id.desc]))
+    @lessons = Lesson.all(:order => [:id.desc])
     render 'lessons/index'
   end
 
@@ -19,12 +19,7 @@ MoxieAcademy.controllers :lessons do#, :conditions => {:protect => true} do
   get :show, :map => 'lessons/:slug' do
     begin
       @lesson = Lesson.first(:slug => params[:slug])
-      if visible_to_user?(current_user, @lesson)
-        render 'lessons/show'
-      else
-        flash[:error] = 'You must have a bad url; that lesson does not exist or is not available to you.'
-        redirect url(:lessons, :index)
-      end
+      render 'lessons/show'
     rescue
       flash[:error] = 'You must have a bad url; that lesson does not exist.'
       redirect url(:lessons, :index)
