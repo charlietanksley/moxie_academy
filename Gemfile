@@ -51,3 +51,6 @@ gem 'padrino', '0.10.1'
 # gem 'padrino-gen', '0.10.1'
 # gem 'padrino-helpers', '0.10.1'
 # gem 'padrino-mailer', '0.10.1'
+
+# Heroku
+gem 'dm-postgres-adapter', :group => :production

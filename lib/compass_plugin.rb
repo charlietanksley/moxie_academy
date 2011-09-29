@@ -18,6 +18,8 @@ module CompassInitializer
       config.output_style = :compressed
     end
 
+    Sass::Plugin.options[:never_update] = true if Padrino.env == :production
+
     Compass.configure_sass_plugin!
     Compass.handle_configuration_change!
 
