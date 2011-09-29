@@ -1,11 +1,11 @@
 .block
-  h3 Lessons
-  /.content
-    ul.admin-list
-      - @lessons.each do |l|
-         li #{{link_to l.title, MoxieAcademy.url_for(:lessons, :edit, :id => l.id)}}
+  - selections = ["I love you, Joy.", "I think you are wonderful.", "You're outta sight!", "Hot Dog!", "<3 <3 <3!", "You make my heart sing.", "That chick's got moxie!"]
+  - number = Random.new.rand(0..selections.count)
+  - today = selections[number]
+  p = today
 
-.block
+
+//.block
   h3 Groups
   .content
     /ul.admin-list
