@@ -1,0 +1,40 @@
+.group
+  ==f.label :title
+  ==f.error_message_on :name
+  ==f.text_field :title, :class => :text_field
+  br
+  span.description Ex: Welcome
+
+.group
+  ==f.label :slug
+  ==f.error_message_on :slug
+  ==f.text_field :slug, :class => :text_field
+  br
+  span.description Ex: welcome
+
+.group
+  ==f.label :video_title
+  ==f.error_message_on :video_title
+  ==f.text_field :video_title, :class => :text_field
+  br
+  span.description Ex: welcome-video
+
+.group
+  ==f.label :poster_name
+  ==f.error_message_on :poster_name
+  ==f.text_field :poster_name, :class => :text_field
+  br
+  span.description Ex: welcome-video.jpg
+
+.group
+  ==f.label :body
+  ==f.error_message_on :body
+  ==f.text_area :body, :class => :text_area
+  br
+  span.description Welcome to the first lesson! So on and so forth...
+
+
+.group.navform.wat-cf
+  ==f.submit pat(:save), :class => :button
+  =="&nbsp;"
+  ==f.submit pat(:cancel), :onclick => "window.location='#{url(:lessons, :index)}';return false", :class => :button

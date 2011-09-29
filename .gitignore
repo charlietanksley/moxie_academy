@@ -1,5 +1,9 @@
+.DS_Store
 Procfile
 .sass-cache
 tmp/
 .rvmrc
 *.db
+coverage/
+.bundle/
+bin/

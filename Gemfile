@@ -1,32 +1,56 @@
-source "http://rubygems.org"
+source :rubygems
 
-gem 'sinatra'
+# Server requirements
+gem 'thin'
+
+# Project requirements
+gem 'rake'
 gem 'rack-flash'
 
-# DB
-gem 'data_mapper'
-gem 'dm-postgres-adapter'
-gem 'bcrypt-ruby', :require => 'bcrypt'
-
-# VIEWS
+# Component requirements
+gem 'bcrypt-ruby', :require => "bcrypt"
+gem 'compass'
+gem 'compass-susy-plugin'
 gem 'slim'
+gem 'rdiscount'
+gem 'dm-postgres-adapter'
+gem 'dm-validations'
+gem 'dm-timestamps'
+gem 'dm-migrations'
+gem 'dm-constraints'
+gem 'dm-aggregates'
+gem 'dm-core'
 
-# DEPLOYMENT
-gem 'thin'
+# Test requirements
+group :test do
+  gem 'rspec'
+  gem 'rack-test', :require => "rack/test"
+  gem 'factory_girl'
+  gem 'capybara'
+  gem 'database_cleaner', :git => 'https://github.com/bmabey/database_cleaner.git'
+  gem 'rspec', :group => "test"
+  gem 'cucumber'
+end
+#gem 'simplecov', '>= 0.4.0', :require => false, :group => :test
 
 group :development do
   gem 'dm-sqlite-adapter'
   gem 'tux'
-  gem 'compass'
-  gem 'compass-susy-plugin'
-  gem 'sass'
-  gem 'foreman'
 end
 
-group :test do
-  gem 'rspec'
-  gem 'capybara'
-  gem 'database_cleaner', :git => 'https://github.com/bmabey/database_cleaner.git'
-  #gem 'fabrication'
-  gem 'factory_girl', '~> 2.0.0'
-end
+
+# Padrino
+gem 'padrino', '0.10.1'
+# Padrino EDGE
+# gem 'padrino', :git => 'git://github.com/padrino/padrino-framework.git'
+#
+# Individual GEMS
+# gem 'padrino-core', '0.10.1'
+# gem 'padrino-admin', '0.10.1'
+# gem 'padrino-cache', '0.10.1'
+# gem 'padrino-gen', '0.10.1'
+# gem 'padrino-helpers', '0.10.1'
+# gem 'padrino-mailer', '0.10.1'
+
+# Heroku
+gem 'dm-postgres-adapter', :group => :production

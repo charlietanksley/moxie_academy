@@ -1,0 +1,17 @@
+.block
+  .secondary-navigation
+    ul.wat-cf
+      li.first==link_to pat(:list), url(:groups, :index)
+      li==link_to pat(:new), url(:groups, :new)
+      li.active==link_to pat(:edit), url(:groups, :edit, :id => @group.id)
+  .content
+    h2.title
+      =pat(:edit)
+      =="&nbsp;"
+      =mt(:group)
+    .inner
+      ==form_for :group, url(:groups, :update, :id => @group.id), :method => :put, :class => :form do |f|
+        ==partial "groups/form", :locals => { :f => f }
+
+-content_for :sidebar, partial("base/sidebar")
+

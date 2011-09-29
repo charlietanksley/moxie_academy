@@ -1,0 +1,31 @@
+.block
+  .secondary-navigation
+    ul.wat-cf
+      li.first.active==link_to pat(:all), url(:groups, :index)
+      li==link_to pat(:new), url(:groups, :new)
+  .content
+    h2.title
+      ==pat(:all)
+      =="&nbsp;"
+      ==mt(:groups)
+    .inner
+      table.table
+        tr
+          th.first=mat(:group, :id)
+          th=mat(:group, :name)
+          th=mat(:group, :password)
+          th.last=="&nbsp;"
+        -@groups.each do |group|
+          tr
+            td.first=group.id
+            td=group.name
+            td=group.password
+            td.last
+              ==button_to pat(:edit), url(:groups, :edit, :id => group.id), :method => :get, :class => :button_to
+              ==" | "
+              ==button_to pat(:delete), url(:groups, :destroy, :id => group.id), :method => :delete, :class => :button_to, :onsubmit => "return confirm('#{pat(:confirm)}')"
+      .actions-bar.wat-cf
+        .actions=="&nbsp;"
+
+-content_for :sidebar, partial("base/sidebar")
+

@@ -1,0 +1,19 @@
+.group
+  ==f.label :email
+  ==f.error_message_on :email
+  ==f.text_field :email, :class => :text_field
+  br
+  span.description Ex: whoever@youknow.com
+
+.group
+  ==f.label :group_id
+  ==f.error_message_on :group_id
+  - options = []
+  - @groups.reverse.each { |g| options.push [g.name, g.id] }
+  ==f.select :group_id, :options => options
+  /:class => :text_field
+
+.group.navform.wat-cf
+  ==f.submit pat(:save), :class => :button
+  =="&nbsp;"
+  ==f.submit pat(:cancel), :onclick => "window.location='#{url(:users, :index)}';return false", :class => :button

@@ -1,0 +1,52 @@
+.content
+
+  nav#admin_nav
+    ul.nav
+      li
+        a href='/lessons' Lessons
+      li
+        a href='/admin/new-lesson' New Lesson
+      li
+        a href='/admin/lessons' Edit Lessons
+      li
+        a href='/admin/users' Current Users
+      li
+        a href='/admin/groups' Current Groups
+      li
+        a href='/logout' Logout
+
+  .admin-edit-lesson
+    h2
+      ' Edit
+      = @lesson.title
+
+    form action='/admin/edit-lesson' method='POST'
+      input type='hidden' name='lesson[id]' value="#{@lesson.id}"
+      p
+        ' Title
+        span.small (this is what the lesson is called)
+        ' :
+      input type='text' name='lesson[title]' label='Title' value="#{@lesson.title}"
+      p
+        ' Slug
+        span.small (the url; no spaces, all lowercase, e.g., 'lesson-one')
+        ' :
+      input type='text' name='lesson[slug]' label='Slug' value="#{@lesson.slug}"
+      p
+        ' Name of Video
+        span.small (no filetype, e.g., 'video1')
+        ' :
+      input type='text' name='lesson[video_title]' label='Name of Video' value="#{@lesson.video_title}"
+      p
+        ' Name of Poster
+        span.small (do include file type, e.g., 'video1.jpg')
+        ' :
+      input type='text' name='lesson[poster_name]' label='Name of Poster' value="#{@lesson.poster_name}"
+      p
+        ' Text
+        span.small (any content you want to show up above the video; just text!)
+        ' :
+      textarea rows=10 cols=40 name='lesson[body]' label='Lesson Body' value="#{@lesson.body}" = @lesson.body
+      br
+      input.submit type='submit' value='Update'
+

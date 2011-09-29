@@ -1,0 +1,18 @@
+.group
+  ==f.label :name
+  ==f.error_message_on :name
+  ==f.text_field :name, :class => :text_field
+  br
+  span.description Ex: September 2011
+
+.group
+  ==f.label :password
+  ==f.error_message_on :password
+  ==f.text_field :password, :class => :text_field
+  br
+  span.description Ex: aSecurePasswordPlease
+
+.group.navform.wat-cf
+  ==f.submit pat(:save), :class => :button
+  =="&nbsp;"
+  ==f.submit pat(:cancel), :onclick => "window.location='#{url(:groups, :index)}';return false", :class => :button
