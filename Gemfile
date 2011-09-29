@@ -22,8 +22,8 @@ gem 'dm-aggregates'
 gem 'dm-core'
 
 # Test requirements
+gem 'rspec'
 group :test do
-  gem 'rspec'
   gem 'rack-test', :require => "rack/test"
   gem 'factory_girl'
   gem 'capybara'
