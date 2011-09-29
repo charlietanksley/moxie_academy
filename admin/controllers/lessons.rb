@@ -27,13 +27,13 @@ Admin.controllers :lessons do
   # EDIT {{{
 
   get :edit, :with => :id do
-    #@lesson = Lesson.first(:id => params[:id])
-    @lesson = Lesson.first(params[:id])
+    @lesson = Lesson.first(:id => params[:id])
+    #@lesson = Lesson.first(params[:id])
     render 'lessons/edit'
   end
 
   put :update, :with => :id do
-    @lesson = Lesson.first(params[:id])
+    @lesson = Lesson.first(:id => params[:id])
     if @lesson.update(params[:lesson])
       flash[:notice] = 'Lesson was successfully updated.'
       redirect url(:lessons, :edit, :id => @lesson.id)

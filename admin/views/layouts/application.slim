@@ -3,7 +3,19 @@ html lang="en" xmlns="http://www.w3.org/1999/xhtml"
   head
     meta content="text/html; charset=utf-8" http-equiv="Content-Type"
     title Moxie Academy
+
+    ==javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"
+    ==javascript_include_tag "markitup/jquery.markitup.js"
+    ==javascript_include_tag "markitup/markdown/set.js"
+    javascript:
+      $(document).ready(function()	{
+          $('#markdown').markItUp(myMarkdownSettings);
+      });
+
     ==stylesheet_link_tag :base, "themes/warehouse/style"
+    ==stylesheet_link_tag :base, "markitup/markitup-skin.css"
+    ==stylesheet_link_tag :base, "markitup/markdown.css"
+    //<link rel="stylesheet" type="text/css" href="markitup/sets/markdown/style.css" />
 
   body
     #container
