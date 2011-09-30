@@ -1,0 +1,12 @@
+.lesson
+  h2
+    a href="/lessons/#{@lesson.slug}" = @lesson.title
+  //p #{{@lesson.body}}
+  /- body = MarkdownPresenter.new(@lesson.body)
+  p #{{@lesson.body_as_html}}
+  .video-js-box
+    //video(poster="http://www.joytanksley.com/resources/moxie/#{@lesson.poster_name}" width="320" height="200" controls preload)
+    //video(width="320" height="200" controls preload)
+    video(width="640" height="480" controls preload)
+      source src="http://www.joytanksley.com/resources/moxie/#{@lesson.video_title}.mp4"
+      source src="http://www.joytanksley.com/resources/moxie/#{@lesson.video_title}.ogv"

@@ -1,16 +1,16 @@
-Factory.define :group, :class => MoxieApp::Group do |t|
+Factory.define :group, :class => Group do |t|
   t.name 'Group'
   t.password 'password'
 end
 
 # http://www.snowblink.co.uk/archives/2009/04/24/factory-girl-and-has-many-through
-Factory.define :user, :class => MoxieApp::User do |t|
+Factory.define :user, :class => User do |t|
   t.sequence(:email) { |n| "email#{n}@factory.com" }
   t.group_id { |a| a.association(:group).id }
 end
 
-Factory.define :lesson, :class => MoxieApp::Lesson do |t|
-  t.title 'Title'
+Factory.define :lesson, :class => Lesson do |t|
+  t.sequence(:title) { |n| "Title #{n}" }
   t.sequence(:slug) { |n| "slug#{n}" }
   t.body 'This is just some text'
   t.video_title 'title'

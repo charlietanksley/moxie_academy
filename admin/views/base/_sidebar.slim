@@ -1,0 +1,13 @@
+.block
+  - selections = ["I love you, Joy.", "I think you are wonderful.", "You're outta sight!", "Hot Dog!", "<3 <3 <3!", "You make my heart sing.", "That chick's got moxie!"]
+  - number = Random.new.rand(0..selections.count)
+  - today = selections[number]
+  p = today
+
+
+//.block
+  h3 Groups
+  .content
+    /ul.admin-list
+      - @groups.each do |g|
+         li #{{link_to g.name, MoxieAcademy.url_for(:groups, :edit, :id => g.id)}}

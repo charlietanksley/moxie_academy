@@ -1,0 +1,17 @@
+.block
+  .secondary-navigation
+    ul.wat-cf
+      li.first==link_to pat(:list), url(:lessons, :index)
+      li==link_to pat(:new), url(:lessons, :new)
+      li.active==link_to pat(:edit), url(:lessons, :edit, :id => @lesson.id)
+  .content
+    h2.title
+      =pat(:edit)
+      =="&nbsp;"
+      =mt(:lesson)
+    .inner
+      ==form_for :lesson, url(:lessons, :update, :id => @lesson.id), :method => :put, :class => :form do |f|
+        ==partial "lessons/form", :locals => { :f => f }
+
+-content_for :sidebar, partial("base/sidebar")
+

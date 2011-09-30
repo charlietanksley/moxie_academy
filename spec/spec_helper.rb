@@ -1,24 +1,23 @@
-require 'rspec'
-require 'rack/test'
+#require 'simplecov'
+#SimpleCov.start
+# SimpleCov.start 'rails'
 
-# Sinatra testing stuff
-require File.join(File.dirname(__FILE__), '..', 'moxie.rb')
-require 'sinatra'
+PADRINO_ENV = 'test' unless defined?(PADRINO_ENV)
+require File.expand_path(File.dirname(__FILE__) + "/../config/boot")
+
+# Database Cleaner
+require 'database_cleaner'
+
+# Capybara
 require 'capybara'
 require 'capybara/rspec'
 require 'capybara/dsl'
-require 'database_cleaner'
-require 'factory_girl'
+Capybara.app = Padrino.application
 
+# Factory Girl
+require 'factory_girl'
 require 'factories'
 
-Capybara.app = MoxieApp
-set :environment, :test
-set :run, false
-set :raise_errors, true
-set :logging, false
-
-ENV['ADMIN_PASSWORD'] = 'password'
 
 RSpec.configure do |config|
   config.include Rack::Test::Methods
@@ -36,33 +35,42 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner.clean
   end
+end
+
+def app
+  ##
+  # You can handle all padrino applications using instead:
+  Padrino.application#.tap { |app| app.set :environment, :test }
+  #MoxieAcademy.tap { |app| app.set :environment, :test }
+  #Admin.tap { |app| app.set :environment, :test }
+end
+
+ENV['ADMIN_PASSWORD'] = 'password'
+
+class TestHelper
+
+  def self.create_test_group
+    Group.create(:name => 'Test', :password => 'password')
+  end
+
+  def self.create_test_user_with_password(group_id)
+    User.create(:email => 'user@example.com', :group_id => group_id)
+  end
+
+  def self.create_test_lesson
+    Lesson.create(:title => 'Title', :video_title => 'whatever', :slug => 'test')
+  end
+
+  def self.create_test_lesson_with_group(user)
+    l = Lesson.create(:title => 'Title', :video_title => 'whatever', :slug => 'test')
+    l.groups << user.group
+    l.save
+
+    l
+  end
 
 end
 
-def create_test_group
-  MoxieApp::Group.create(:name => 'Test', :password => 'password')
-end
-
-def create_test_user_with_password(group_id)
-  MoxieApp::User.create(:email => 'user@example.com', :group_id => group_id)
-end
-
-def create_test_lesson
-  MoxieApp::Lesson.create(:title => 'Title', :video_title => 'whatever', :slug => 'test')
-end
-
-def admin_login_path
-  '/admin/login'
-end
-
-def new_lesson_path
-  '/admin/new-lesson'
-end
-
-def admin_lesson_path
-  '/admin/lessons'
-end
-
-def admin_user_path
-  '/admin/users'
-end
+__END__
+For Spork/Guard:
+https://gist.github.com/903600

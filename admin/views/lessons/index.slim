@@ -1,0 +1,37 @@
+.block
+  .secondary-navigation
+    ul.wat-cf
+      li.first.active==link_to pat(:all), url(:lessons, :index)
+      li==link_to pat(:new), url(:lessons, :new)
+  .content
+    h2.title
+      ==pat(:all)
+      =="&nbsp;"
+      ==mt(:lessons)
+    .inner
+      table.table
+        tr
+          th.first=mat(:lesson, :id)
+          th=mat(:lesson, :title)
+          th=mat(:lesson, :slug)
+          th=mat(:lesson, :body)
+          th=mat(:lesson, :video_title)
+          th=mat(:lesson, :poster_name)
+          th.last=="&nbsp;"
+        - @lessons.each do |lesson|
+          tr
+            td.first=lesson.id
+            td=lesson.title
+            td=lesson.slug
+            td #{{truncate_words(lesson.body, :length => 10)}}
+            td=lesson.video_title
+            td=lesson.poster_name
+            td.last
+              ==button_to pat(:edit), url(:lessons, :edit, :id => lesson.id), :method => :get, :class => :button_to
+              ==" | "
+              ==button_to pat(:delete), url(:lessons, :destroy, :id => lesson.id), :method => :delete, :class => :button_to, :onsubmit => "return confirm('#{pat(:confirm)}')"
+      .actions-bar.wat-cf
+        .actions=="&nbsp;"
+
+-content_for :sidebar, partial("base/sidebar")
+

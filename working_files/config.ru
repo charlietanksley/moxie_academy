@@ -1,0 +1,3 @@
+require './moxie'
+
+run MoxieApp
