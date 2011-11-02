@@ -16,3 +16,7 @@ Factory.define :lesson, :class => Lesson do |t|
   t.video_title 'title'
   t.poster_name 'sample.jpg'
 end
+
+Factory.define :discussion, :class => Discussion do |t|
+  t.group_id { |a| a.association(:group).id }
+end

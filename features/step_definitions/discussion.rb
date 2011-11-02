@@ -20,6 +20,16 @@ end
 
 Given /^There are some comments$/ do
   Given 'A discussion exists'
+
+  discussion = Discussion.first(:group_id => Group.first(:name => 'sample').id)
+  joe = User.first(:email => 'joe@email.com')
+
+  Comment.create(:author => joe,
+                 :discussion_id => discussion.id,
+                 :body => 'OMG, I love it!')
+  Comment.create(:author => joe,
+                 :discussion_id => discussion.id,
+                 :body => 'ZOMG, I double love it!')
 end
 
 When /^I look at the discussions$/ do
