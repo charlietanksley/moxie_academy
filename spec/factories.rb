@@ -20,3 +20,9 @@ end
 Factory.define :discussion, :class => Discussion do |t|
   t.group_id { |a| a.association(:group).id }
 end
+
+Factory.define :comment, :class => Comment do |t|
+  t.user_id { |a| a.association(:user).id }
+  t.discussion_id { |a| a.association(:group).id }
+  t.sequence(:body) { |n| "some comment! #{n}" }
+end

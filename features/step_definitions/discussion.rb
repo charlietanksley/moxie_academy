@@ -1,12 +1,12 @@
 Given /^A user exists$/ do
-  @group = Group.create(:name => 'sample',
+  @group = Group.first_or_create(:name => 'sample',
                         :password => 'password')
-  @user = User.create(:email => 'joe@email.com',
+  @user = User.first_or_create(:email => 'joe@email.com',
                       :group_id => Group.first(:name => 'sample').id)
 end
 
 Given /^A discussion exists$/ do
-  @discussion = Discussion.create(:group_id => @group.id)#Group.first(:name => 'sample').id)
+  @discussion = Discussion.first_or_create(:group_id => @group.id)#Group.first(:name => 'sample').id)
 end
   
 Given /^I am logged in as a user$/ do
@@ -20,20 +20,20 @@ end
 
 Given /^There are some comments$/ do
   Given 'A discussion exists'
-  joe = User.first(:email => 'joe@email.com')
 
-  @comment1 = Comment.create(:user_id => joe,
+  @comment1 = Comment.create(:user_id => @user.id,
                              :discussion_id => @discussion.id,
                              :body => 'OMG, I love it!')
-  @comment2 = Comment.create(:user_id => joe,
+  @comment2 = Comment.create(:user_id => @user.id,
                              :discussion_id => @discussion.id,
                              :body => 'ZOMG, I double love it!')
 end
 
 When /^I look at the discussions$/ do
-  visit Conversation.url(:discussion, :index, :id => @group.id)
+  visit MoxieAcademy.url(:discussions, :index)
 end
 
 Then /^I see the comments$/ do
-  pending # express the regexp above with the code you wish you had
+  page.should have_content @comment1.body
+  page.should have_content @comment2.body
 end
