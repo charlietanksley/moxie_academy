@@ -2,10 +2,11 @@ class Comment
   include DataMapper::Resource
 
   # property <name>, <type>
-  property :id, Serial
-  property :discussion_id, Integer
-  property :user_id, Integer
-  property :body, Text
+  property :id,             Serial
+  property :discussion_id,  Integer
+  property :user_id,        Integer
+  property :body,           Text
+  property :body,           Text
 
   validates_presence_of :discussion_id
   validates_presence_of :user_id
