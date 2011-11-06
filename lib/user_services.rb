@@ -60,6 +60,14 @@ module UserServices
       User.first(:id => session[:uid])
     end
 
+    # Public: Return the discussion for the current User
+    #
+    # Returns an Integer, a discussion_id
+    def current_discussion_id
+      Discussion.first(:group_id => current_user.group_id).id rescue nil
+    end
+
+
     # Public: Select elements from an array based on whether the User can view them.
     #
     # lessons - an array (e.g., of Lessons)
