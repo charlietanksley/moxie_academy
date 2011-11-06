@@ -11,7 +11,6 @@ Feature: Discussions
     When I look at the discussions
     Then I see the comments
 
-  @wip
   Scenario: Make a comment
     Given I make a commment
     Then I should see my comment

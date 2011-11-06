@@ -29,11 +29,25 @@ Given /^There are some comments$/ do
                              :body => 'ZOMG, I double love it!')
 end
 
-When /^I look at the discussions$/ do
+Given /^I look at the discussions$/ do
   visit MoxieAcademy.url(:discussions, :index)
 end
+
+Given /^I make a commment$/ do
+  @body = 'I just wrote this!'
+
+  When 'I look at the discussions'
+  
+  fill_in 'discussion[body]', :with => @body
+  click_on 'Say it!'
+end
+
 
 Then /^I see the comments$/ do
   page.should have_content @comment1.body
   page.should have_content @comment2.body
+end
+
+Then /^I should see my comment$/ do
+  page.should have_content @body
 end
