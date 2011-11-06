@@ -7,14 +7,21 @@ MoxieAcademy.controllers :discussions do
 
   #layout :lessons_layout
 
-  # INDEX {{{
   get :index do
-    @discussions = Discussion.first(:group_id => current_user.group_id).comments#.discussion_for(current_user.group_id)
+    @discussions = Discussion.discussion_for(current_user.group_id)
     render 'discussions/index'
   end
 
-  # END INDEX }}}
-  # SHOW {{{
+  post :create do
+    comment = Comment.new(params[:discussion])
+    if comment.save
+      redirect url(:discussions, :index)
+    else
+      flash[:error] = "Sorry, something went wrong!"
+      redirect url(:discussions, :index)
+    end
+  end
+
 
   #get :show, :map => 'lessons/:slug' do
   #  begin
@@ -26,7 +33,5 @@ MoxieAcademy.controllers :discussions do
   #  end
 
   #end
-
-  # END SHOW }}}
 
 end

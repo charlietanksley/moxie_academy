@@ -1,0 +1,11 @@
+==f.label :body
+==f.error_message_on :body
+==f.text_field :body, :class => :text_field
+
+// I don't understand how to use features of the AbstractFormBuilder. :(
+
+
+== f.hidden_field :user_id, :value => current_user.id, :class => :hidden
+== f.hidden_field :discussion_id, :value => current_discussion_id, :class => :hidden
+
+== submit_tag 'Say it!'

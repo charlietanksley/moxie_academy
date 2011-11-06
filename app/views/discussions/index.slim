@@ -1,4 +1,7 @@
-h1 WTF!
+==form_for :discussion, url(:discussions, :create), :class => :form do |f|
+  ==partial "discussions/form", :locals => { :f => f }
 
-- @discussions.each do |c|
-  p = c.body
+
+- if @discussions
+  - @discussions.each do |c|
+    p = c.body
