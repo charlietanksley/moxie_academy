@@ -34,7 +34,7 @@ describe "Comment Model" do
   end
 
   it 'has a created_at timestamp' do
-    comment.created_at.should == ''
+    comment.created_at.class.should == DateTime
   end
 
   pending 'belongs to a user'
