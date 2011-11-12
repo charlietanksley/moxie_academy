@@ -52,27 +52,32 @@ describe 'If you are logged in,', :type => :request do
     click_on 'Sign In'
   end
 
-  it 'when you view the lessons overview page, you only see lessons available to you' do
-    l = create(:lesson)
-    visit MoxieAcademy.url(:lessons, :index)
+  # I'll eventually want to consider adding these back in, but as of Wed
+  # Nov  2 13:26:10 EDT 2011 I don't want them.  I don't want them
+  # because there is only one class, so I don't have to worry about who
+  # can view what!
 
-    current_path.should eq MoxieAcademy.url(:lessons, :index)
-    page.should have_content @l.title
-    page.should_not have_content l.title
-  end
+  #it 'when you view the lessons overview page, you only see lessons available to you' do
+  #  l = create(:lesson)
+  #  visit MoxieAcademy.url(:lessons, :index)
 
-  it 'you can view a specific lesson if it is visible to you' do
-    path = MoxieAcademy.url(:lessons, :show, :slug => @l.slug)
-    visit path
-    current_path.should eq path
-  end
+  #  current_path.should eq MoxieAcademy.url(:lessons, :index)
+  #  page.should have_content @l.title
+  #  page.should_not have_content l.title
+  #end
 
-  it 'you cannot view a specific lesson if it is not visible to you' do
-    l = create(:lesson)
-    
-    visit MoxieAcademy.url(:lessons, :show, :slug => l.slug)
-    current_path.should eq MoxieAcademy.url(:lessons, :index)
-  end
+  #it 'you can view a specific lesson if it is visible to you' do
+  #  path = MoxieAcademy.url(:lessons, :show, :slug => @l.slug)
+  #  visit path
+  #  current_path.should eq path
+  #end
+
+  #it 'you cannot view a specific lesson if it is not visible to you' do
+  #  l = create(:lesson)
+  #  
+  #  visit MoxieAcademy.url(:lessons, :show, :slug => l.slug)
+  #  current_path.should eq MoxieAcademy.url(:lessons, :index)
+  #end
 
 
   it 'you get redirected if the page does not exist' do
