@@ -9,6 +9,7 @@ MoxieAcademy.controllers :lessons do#, :conditions => {:protect => true} do
 
   # INDEX {{{
   get :index do
+    @title = 'Moxie Academy: The lessons'
     @lessons = Lesson.all(:order => [:id.desc])
     render 'lessons/index'
   end
@@ -19,6 +20,7 @@ MoxieAcademy.controllers :lessons do#, :conditions => {:protect => true} do
   get :show, :map => 'lessons/:slug' do
     begin
       @lesson = Lesson.first(:slug => params[:slug])
+      @title = "Moxie Academy: #{@lesson.title}"
       render 'lessons/show'
     rescue
       flash[:error] = 'You must have a bad url; that lesson does not exist.'
