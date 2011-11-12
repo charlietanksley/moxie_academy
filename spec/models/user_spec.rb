@@ -30,6 +30,11 @@ describe "User Model" do
     user.should_not be_valid
   end
 
+  it 'is invalid without a name' do
+    user = build(:user, :name => '')
+    user.should_not be_valid
+  end
+
   pending 'belongs to a group'
 
 end

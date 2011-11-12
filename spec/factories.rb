@@ -7,6 +7,7 @@ end
 Factory.define :user, :class => User do |t|
   t.sequence(:email) { |n| "email#{n}@factory.com" }
   t.group_id { |a| a.association(:group).id }
+  t.name 'Joe User'
 end
 
 Factory.define :lesson, :class => Lesson do |t|
